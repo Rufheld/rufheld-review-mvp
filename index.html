@@ -598,11 +598,10 @@
 
             if (autocompleteService) {
                 autocompleteService.getPlacePredictions({
-                    autocompleteService.getPlacePredictions({
                     input: query,
                     types: ['establishment'],
-                    location: new google.maps.LatLng(51.1657, 10.4515), // Deutschland Zentrum
-                    radius: 1000000 // 1000km Radius
+                    location: new google.maps.LatLng(51.1657, 10.4515),
+                    radius: 1000000
                 }, displayAutocomplete);
             }
         });
