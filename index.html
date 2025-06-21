@@ -459,6 +459,83 @@
             .trust-items {
                 flex-direction: column;
             }
+            /* Kontaktformular Styles - In Ihr CSS einfügen */
+            .contact-form-section {
+                background: white;
+                border-radius: 12px;
+                padding: 24px;
+                margin: 24px 0;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+                border: 1px solid #e5e7eb;
+            }
+            
+            .contact-form-section h3 {
+                color: #1f2937;
+                font-size: 20px;
+                font-weight: 600;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            
+            .contact-form {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            
+            .contact-form input {
+                padding: 12px 16px;
+                border: 2px solid #e5e7eb;
+                border-radius: 8px;
+                font-size: 16px;
+                transition: border-color 0.3s ease;
+            }
+            
+            .contact-form input:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+            
+            .contact-form input:valid {
+                border-color: #10b981;
+            }
+            
+            .contact-form input:invalid:not(:placeholder-shown) {
+                border-color: #ef4444;
+            }
+            
+            /* Contact Form Animation */
+            .contact-form-section.show {
+                animation: slideIn 0.3s ease-out;
+            }
+            
+            /* Button States */
+            .order-btn:disabled {
+                background-color: #9ca3af !important;
+                cursor: not-allowed !important;
+                opacity: 0.5 !important;
+                transform: none !important;
+            }
+            
+            .order-btn:disabled:hover {
+                background-color: #9ca3af !important;
+                transform: none !important;
+            }
+            
+            .order-btn:not(:disabled) {
+                background-color: #10b981;
+                cursor: pointer;
+                opacity: 1;
+                transition: all 0.3s ease;
+            }
+            
+            .order-btn:not(:disabled):hover {
+                background-color: #059669;
+                transform: translateY(-2px);
+            }
         }
     </style>
 </head>
@@ -857,6 +934,140 @@
             script.defer = true;
             document.head.appendChild(script);
         });
+
+        // Kontaktformular Logic - In Ihr JavaScript einfügen
+
+        // Globale Variablen
+        let contactFormVisible = false;
+        let contactDataComplete = false;
+        
+        // Funktion um Kontaktformular zu zeigen/verstecken
+        function toggleContactForm() {
+            const contactSection = document.querySelector('.contact-form-section');
+            const selectedReviews = getSelectedReviews();
+            
+            if (selectedReviews.length > 0 && !contactFormVisible) {
+                // Zeige Kontaktformular
+                contactSection.style.display = 'block';
+                contactSection.classList.add('show');
+                contactFormVisible = true;
+                
+                // Scroll zu Kontaktformular
+                contactSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Verstecke Preis-Button bis Kontaktdaten vollständig
+                updatePricingVisibility();
+            } else if (selectedReviews.length === 0) {
+                // Verstecke Kontaktformular wenn keine Reviews ausgewählt
+                contactSection.style.display = 'none';
+                contactFormVisible = false;
+                contactDataComplete = false;
+                updatePricingVisibility();
+            }
+        }
+        
+        // Kontaktdaten Validierung
+        function validateContactForm() {
+            const name = document.getElementById('customerName').value.trim();
+            const email = document.getElementById('customerEmail').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            
+            const isComplete = name.length > 0 && 
+                              email.includes('@') && 
+                              phone.length > 0;
+                              
+            contactDataComplete = isComplete;
+            updatePricingVisibility();
+            
+            return isComplete;
+        }
+        
+        // Preis-Section und Button State updaten
+        function updatePricingVisibility() {
+            const summarySection = document.getElementById('selection-summary');
+            const orderBtn = summarySection.querySelector('.order-btn');
+            const selectedReviews = getSelectedReviews();
+            
+            if (selectedReviews.length > 0) {
+                // ✅ Preis-Section immer zeigen wenn Reviews ausgewählt
+                summarySection.style.display = 'block';
+                
+                // Button State basierend auf Kontaktdaten
+                if (contactDataComplete) {
+                    // ✅ Aktivierter Button
+                    orderBtn.disabled = false;
+                    orderBtn.style.opacity = '1';
+                    orderBtn.style.cursor = 'pointer';
+                    orderBtn.style.backgroundColor = '#10b981'; // Grün
+                    // ✅ Text bleibt gleich!
+                } else {
+                    // ❌ Deaktivierter Button  
+                    orderBtn.disabled = true;
+                    orderBtn.style.opacity = '0.5';
+                    orderBtn.style.cursor = 'not-allowed';
+                    orderBtn.style.backgroundColor = '#9ca3af'; // Grau
+                    // ✅ Text bleibt gleich: "Kostenlose Prüfung anfragen"
+                }
+            } else {
+                // Keine Reviews = alles verstecken
+                summarySection.style.display = 'none';
+            }
+        }
+        
+        // Event Listeners für Kontaktformular
+        document.addEventListener('DOMContentLoaded', function() {
+            // Input Event Listeners
+            ['customerName', 'customerEmail', 'customerPhone'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', validateContactForm);
+                    input.addEventListener('blur', validateContactForm);
+                }
+            });
+        });
+        
+        // Erweitere die bestehende updateSelection Funktion
+        function updateSelection() {
+            // Ihre bestehende Logic hier...
+            
+            // Zusätzlich: Kontaktformular Logic
+            toggleContactForm();
+        }
+        
+        // Erweitere die bestehende submitOrder Funktion
+        function submitOrder() {
+            // ✅ Prüfe ob Kontaktdaten vollständig sind
+            if (!validateContactForm()) {
+                alert('Bitte füllen Sie alle Kontaktdaten aus.');
+                return false;
+            }
+            
+            // ✅ Prüfe ob Reviews ausgewählt sind
+            const selectedReviews = getSelectedReviews();
+            if (selectedReviews.length === 0) {
+                alert('Bitte wählen Sie mindestens eine Bewertung aus.');
+                return false;
+            }
+            
+            // Sammle alle Daten
+            const orderData = {
+                customerName: document.getElementById('customerName').value.trim(),
+                customerEmail: document.getElementById('customerEmail').value.trim(),
+                customerPhone: document.getElementById('customerPhone').value.trim(),
+                selectedReviews: selectedReviews.length,
+                totalPrice: document.getElementById('total-price').textContent
+            };
+            
+            console.log('Order Data:', orderData);
+            
+            // Hier dann der API Call + Thank You Page
+            // showThankYouPage(orderData);
+            
+            return true;
+        }
     </script>
 </body>
 </html>
