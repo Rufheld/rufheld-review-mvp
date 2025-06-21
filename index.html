@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rufheld - Google Bewertungen prüfen lassen</title>
+    <meta name="description" content="Lassen Sie problematische Google Bewertungen professionell prüfen. Nur €39.99 pro Bewertung - Sie zahlen nur bei erfolgreichem Ergebnis.">
+    
+    <!-- Facebook Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+
+    fbq('init', 'YOUR_PIXEL_ID_HERE');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=YOUR_PIXEL_ID_HERE&ev=PageView&noscript=1"
+    /></noscript>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+        
+        .tagline {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .main-content {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .content-section {
+            padding: 40px;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            gap: 20px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #f8f9fa;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active {
+            background: #2a5298;
+            color: white;
+        }
+        
+        .step-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #dee2e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .step.active .step-number {
+            background: white;
+            color: #2a5298;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .search-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+        }
+        
+        .autocomplete-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            margin-top: 5px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .autocomplete-item {
+            padding: 15px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+        
+        .autocomplete-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .autocomplete-item:last-child {
+            border-bottom: none;
+        }
+        
+        .reviews-section {
+            display: none;
+            margin-top: 40px;
+        }
+        
+        .reviews-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .reviews-count {
+            font-size: 1.1rem;
+            color: #6c757d;
+        }
+        
+        .bulk-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .bulk-btn {
+            padding: 8px 16px;
+            border: 1px solid #dee2e6;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .bulk-btn:hover {
+            background: #f8f9fa;
+            border-color: #2a5298;
+        }
+        
+        .review-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .review-card.selected {
+            border-color: #2a5298;
+            background: #e3f2fd;
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .review-meta {
+            flex: 1;
+        }
+        
+        .reviewer-name {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .review-date {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 10px;
+        }
+        
+        .star {
+            color: #ffc107;
+            font-size: 18px;
+        }
+        
+        .star.empty {
+            color: #dee2e6;
+        }
+        
+        .review-text {
+            color: #495057;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .review-checkbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .load-more-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #6c757d, #495057);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+        
+        .load-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .load-more-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .selection-summary {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            display: none;
+        }
+        
+        .summary-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .summary-text {
+            flex: 1;
+        }
+        
+        .selected-count {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .total-price {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .price-note {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .order-btn {
+            padding: 15px 30px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .order-btn:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2a5298;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .trust-indicators {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .trust-items {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .trust-item {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .trust-icon {
+            font-size: 2rem;
+            color: #2a5298;
+            margin-bottom: 10px;
+        }
+        
+        .trust-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .trust-text {
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header {
+                padding: 30px 15px;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .step-indicator {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .summary-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .trust-items {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="logo">Rufheld</h1>
+            <p class="tagline">Google Bewertungen professionell prüfen lassen</p>
+        </header>
+
+        <main class="main-content">
+            <div class="content-section">
+                <div class="step-indicator">
+                    <div class="step active">
+                        <div class="step-number">1</div>
+                        <span>Unternehmen wählen</span>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-number">2</div>
+                        <span>Bewertungen auswählen</span>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-number">3</div>
+                        <span>Anfrage senden</span>
+                    </div>
+                </div>
+
+                <div id="search-section">
+                    <h2 class="section-title">Welches Unternehmen möchten Sie prüfen lassen?</h2>
+                    <div class="search-container">
+                        <input 
+                            type="text" 
+                            id="business-search" 
+                            class="search-input"
+                            placeholder="Geben Sie Ihren Firmennamen ein..."
+                            autocomplete="off"
+                        >
+                        <div id="autocomplete-dropdown" class="autocomplete-dropdown"></div>
+                    </div>
+                </div>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Bewertungen werden geladen...</p>
+                </div>
+
+                <div id="reviews-section" class="reviews-section">
+                    <h2 class="section-title">Wählen Sie problematische Bewertungen aus</h2>
+                    <div class="reviews-header">
+                        <div id="reviews-count" class="reviews-count"></div>
+                        <div class="bulk-actions">
+                            <button class="bulk-btn" onclick="selectByRating(1)">Alle 1-Sterne</button>
+                            <button class="bulk-btn" onclick="selectByRating(2)">Alle 2-Sterne</button>
+                            <button class="bulk-btn" onclick="clearSelection()">Auswahl aufheben</button>
+                        </div>
+                    </div>
+                    <div id="reviews-container"></div>
+                    <button id="load-more-btn" class="load-more-btn" onclick="loadMoreReviews()" style="display: none;">
+                        Weitere Bewertungen laden
+                    </button>
+                </div>
+
+                <div id="selection-summary" class="selection-summary">
+                    <div class="summary-content">
+                        <div class="summary-text">
+                            <div class="selected-count" id="selected-count">0 Bewertungen ausgewählt</div>
+                            <div class="total-price" id="total-price">€0,00</div>
+                            <div class="price-note">Zahlung nur bei erfolgreichem Ergebnis</div>
+                        </div>
+                        <button class="order-btn" onclick="submitOrder()">
+                            Kostenlose Prüfung anfragen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="trust-indicators">
+            <div class="trust-items">
+                <div class="trust-item">
+                    <div class="trust-icon">⭐</div>
+                    <div class="trust-title">4,9 Sterne Bewertung</div>
+                    <div class="trust-text">Geprüft & bewertet von unseren Kunden</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🔒</div>
+                    <div class="trust-title">100% Risikofrei</div>
+                    <div class="trust-text">Sie zahlen nur bei erfolgreichem Ergebnis</div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">⚡</div>
+                    <div class="trust-title">Schnelle Bearbeitung</div>
+                    <div class="trust-text">Erste Rückmeldung oft binnen 24-48h</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration - Replace with your actual API endpoint
+        const API_BASE_URL = 'YOUR_BACKEND_URL_HERE';
+        const PRICE_PER_REVIEW = 39.99;
+        
+        // Global state
+        let selectedPlaceId = null;
+        let allReviews = [];
+        let selectedReviews = new Set();
+        let currentOffset = 0;
+        let hasMoreReviews = true;
+        let autocompleteService = null;
+        let placesService = null;
+
+        // Initialize Google Places API
+        function initializeGooglePlaces() {
+            if (typeof google !== 'undefined') {
+                autocompleteService = new google.maps.places.AutocompleteService();
+                const mapDiv = document.createElement('div');
+                const map = new google.maps.Map(mapDiv);
+                placesService = new google.maps.places.PlacesService(map);
+            }
+        }
+
+        // Facebook Pixel tracking
+        function trackEvent(eventName, data = {}) {
+            if (typeof fbq !== 'undefined') {
+                fbq('track', eventName, data);
+            }
+        }
+
+        // Business search functionality
+        document.getElementById('business-search').addEventListener('input', function(e) {
+            const query = e.target.value;
+            if (query.length < 3) {
+                hideAutocomplete();
+                return;
+            }
+
+            if (autocompleteService) {
+                autocompleteService.getPlacePredictions({
+                    input: query,
+                    types: ['establishment']
+                }, displayAutocomplete);
+            }
+        });
+
+        function displayAutocomplete(predictions, status) {
+            const dropdown = document.getElementById('autocomplete-dropdown');
+            dropdown.innerHTML = '';
+
+            if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
+                predictions.forEach(prediction => {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    item.textContent = prediction.description;
+                    item.onclick = () => selectBusiness(prediction);
+                    dropdown.appendChild(item);
+                });
+                dropdown.style.display = 'block';
+            } else {
+                hideAutocomplete();
+            }
+        }
+
+        function hideAutocomplete() {
+            document.getElementById('autocomplete-dropdown').style.display = 'none';
+        }
+
+        function selectBusiness(prediction) {
+            selectedPlaceId = prediction.place_id;
+            document.getElementById('business-search').value = prediction.description;
+            hideAutocomplete();
+            
+            // Track business selection
+            trackEvent('Search', {
+                search_string: prediction.description
+            });
+
+            // Update UI
+            document.getElementById('step2').classList.add('active');
+            
+            // Load reviews
+            loadReviews();
+        }
+
+        async function loadReviews() {
+            if (!selectedPlaceId) return;
+
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('reviews-section').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/reviews/${selectedPlaceId}?offset=${currentOffset}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    allReviews = [...allReviews, ...data.reviews];
+                    hasMoreReviews = data.hasMore;
+                    displayReviews();
+                    
+                    // Track reviews loaded
+                    trackEvent('ViewContent', {
+                        content_type: 'reviews',
+                        num_items: data.reviews.length
+                    });
+                } else {
+                    alert('Fehler beim Laden der Bewertungen: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error loading reviews:', error);
+                alert('Fehler beim Laden der Bewertungen. Bitte versuchen Sie es erneut.');
+            }
+
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function displayReviews() {
+            const container = document.getElementById('reviews-container');
+            const reviewsSection = document.getElementById('reviews-section');
+            
+            // Clear container if this is the first load
+            if (currentOffset === 0) {
+                container.innerHTML = '';
+            }
+
+            allReviews.slice(currentOffset).forEach(review => {
+                const reviewCard = createReviewCard(review);
+                container.appendChild(reviewCard);
+            });
+
+            // Update reviews count
+            document.getElementById('reviews-count').textContent = 
+                `${allReviews.length} Bewertungen gefunden`;
+
+            // Show/hide load more button
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (hasMoreReviews) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+
+            reviewsSection.style.display = 'block';
+        }
+
+        function createReviewCard(review) {
+            const card = document.createElement('div');
+            card.className = 'review-card';
+            card.dataset.reviewId = review.id;
+
+            const stars = generateStars(parseInt(review.rating));
+            const date = new Date(review.datetime).toLocaleDateString('de-DE');
+
+            card.innerHTML = `
+                <input type="checkbox" class="review-checkbox" onchange="toggleReviewSelection('${review.id}')">
+                <div class="review-header">
+                    <div class="review-meta">
+                        <div class="reviewer-name">${review.reviewer}</div>
+                        <div class="review-date">${date}</div>
+                    </div>
+                </div>
+                <div class="rating">${stars}</div>
+                <div class="review-text">${review.text || 'Keine Bewertung hinterlassen'}</div>
+            `;
+
+            return card;
+        }
+
+        function generateStars(rating) {
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= rating) {
+                    stars += '<span class="star">★</span>';
+                } else {
+                    stars += '<span class="star empty">★</span>';
+                }
+            }
+            return stars;
+        }
+
+        function toggleReviewSelection(reviewId) {
+            const card = document.querySelector(`[data-review-id="${reviewId}"]`);
+            const checkbox = card.querySelector('.review-checkbox');
+
+            if (checkbox.checked) {
+                selectedReviews.add(reviewId);
+                card.classList.add('selected');
+            } else {
+                selectedReviews.delete(reviewId);
+                card.classList.remove('selected');
+            }
+
+            updateSelectionSummary();
+        }
+
+        function selectByRating(rating) {
+            allReviews.forEach(review => {
+                if (parseInt(review.rating) === rating) {
+                    selectedReviews.add(review.id);
+                    const card = document.querySelector(`[data-review-id="${review.id}"]`);
+                    if (card) {
+                        card.classList.add('selected');
+                        card.querySelector('.review-checkbox').checked = true;
+                    }
+                }
+            });
+
+            updateSelectionSummary();
+            
+            // Track bulk selection
+            trackEvent('AddToCart', {
+                content_type: 'reviews',
+                value: selectedReviews.size * PRICE_PER_REVIEW,
+                currency: 'EUR'
+            });
+        }
+
+        function clearSelection() {
+            selectedReviews.clear();
+            document.querySelectorAll('.review-card').forEach(card => {
+                card.classList.remove('selected');
+                card.querySelector('.review-checkbox').checked = false;
+            });
+            updateSelectionSummary();
+        }
+
+        function updateSelectionSummary() {
+            const count = selectedReviews.size;
+            const total = count * PRICE_PER_REVIEW;
+            
+            document.getElementById('selected-count').textContent = 
+                `${count} Bewertung${count !== 1 ? 'en' : ''} ausgewählt`;
+            document.getElementById('total-price').textContent = 
+                `€${total.toFixed(2).replace('.', ',')}`;
+
+            const summary = document.getElementById('selection-summary');
+            if (count > 0) {
+                summary.style.display = 'block';
+                document.getElementById('step3').classList.add('active');
+            } else {
+                summary.style.display = 'none';
+                document.getElementById('step3').classList.remove('active');
+            }
+        }
+
+        function loadMoreReviews() {
+            currentOffset = allReviews.length;
+            loadReviews();
+        }
+
+        function submitOrder() {
+            if (selectedReviews.size === 0) {
+                alert('Bitte wählen Sie mindestens eine Bewertung aus.');
+                return;
+            }
+
+            // Track order initiation
+            trackEvent('InitiateCheckout', {
+                content_type: 'reviews',
+                value: selectedReviews.size * PRICE_PER_REVIEW,
+                currency: 'EUR',
+                num_items: selectedReviews.size
+            });
+
+            // For MVP, just show success message
+            alert(`Vielen Dank! Wir haben Ihre Anfrage für ${selectedReviews.size} Bewertung${selectedReviews.size !== 1 ? 'en' : ''} erhalten. Gesamtwert: €${(selectedReviews.size * PRICE_PER_REVIEW).toFixed(2).replace('.', ',')} (nur bei erfolgreichem Ergebnis). Wir melden uns innerhalb von 24 Stunden bei Ihnen.`);
+
+            // Here you would normally send the data to your backend
+            console.log('Selected reviews:', Array.from(selectedReviews));
+            console.log('Place ID:', selectedPlaceId);
+            console.log('Total price:', selectedReviews.size * PRICE_PER_REVIEW);
+        }
+
+        // Hide autocomplete when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                hideAutocomplete();
+            }
+        });
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load Google Places API
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_PLACES_API_KEY_HERE&libraries=places&callback=initializeGooglePlaces';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>
