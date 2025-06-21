@@ -309,6 +309,151 @@
             cursor: not-allowed;
             transform: none;
         }
+
+        /* Schickes Kontaktformular CSS - Mit Rufheld Brandfarben */
+        .contact-form-section {
+            background: linear-gradient(135deg, #005CA0 0%, #00277C 100%);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 8px 16px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+            display: none; /* Standardmäßig versteckt */
+        }
+
+        .contact-form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(26, 170, 142, 0.1) 0%, rgba(29, 195, 163, 0.05) 100%);
+            pointer-events: none;
+        }
+
+        .contact-form-section h3 {
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .contact-subtitle {
+            color: rgba(255,255,255,0.9);
+            font-size: 16px;
+            text-align: center;
+            margin-bottom: 32px;
+            font-weight: 300;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 12px;
+            font-size: 16px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1AAA8E;
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 8px 24px rgba(0,0,0,0.15),
+                0 0 0 4px rgba(26, 170, 142, 0.2);
+        }
+
+        .form-group input:valid {
+            border-color: #1DC3A3;
+            background: rgba(29, 195, 163, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        /* Icons für Inputs */
+        .form-group::before {
+            content: '';
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.6;
+            z-index: 2;
+        }
+
+        .form-group.name::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
+        }
+
+        .form-group.email::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
+        }
+
+        .form-group.phone::before {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E");
+        }
+
+        .privacy-notice {
+            grid-column: 1 / -1;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            margin-top: 16px;
+            padding: 12px 20px;
+            background: rgba(26, 170, 142, 0.15);
+            border: 1px solid rgba(29, 195, 163, 0.3);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Animation beim Erscheinen */
+        .contact-form-section.show {
+            display: block;
+            animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
         
         .selection-summary {
             background: linear-gradient(135deg, #2a5298, #1e3c72);
@@ -350,7 +495,7 @@
         
         .order-btn {
             padding: 15px 30px;
-            background: #28a745;
+            background: #1AAA8E;
             color: white;
             border: none;
             border-radius: 12px;
@@ -361,9 +506,16 @@
         }
         
         .order-btn:hover {
-            background: #218838;
+            background: #1DC3A3;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 5px 15px rgba(26, 170, 142, 0.4);
+        }
+
+        .order-btn:disabled {
+            background-color: #9ca3af !important;
+            cursor: not-allowed !important;
+            opacity: 0.5 !important;
+            transform: none !important;
         }
         
         .loading {
@@ -459,207 +611,15 @@
             .trust-items {
                 flex-direction: column;
             }
-             /* Schickes Kontaktformular CSS - Mit Rufheld Brandfarben */
-            .contact-form-section {
-                background: linear-gradient(135deg, #005CA0 0%, #00277C 100%);
-                border-radius: 16px;
-                padding: 32px;
-                margin: 32px 0;
-                box-shadow: 
-                    0 20px 40px rgba(0,0,0,0.1),
-                    0 8px 16px rgba(0,0,0,0.08);
-                position: relative;
-                overflow: hidden;
-                display: none; /* Standardmäßig versteckt */
-            }
-    
-            .contact-form-section::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background: linear-gradient(45deg, rgba(26, 170, 142, 0.1) 0%, rgba(29, 195, 163, 0.05) 100%);
-                pointer-events: none;
-            }
-    
-            .contact-form-section h3 {
-                color: white;
-                font-size: 24px;
-                font-weight: 700;
-                margin-bottom: 8px;
-                text-align: center;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            }
-    
-            .contact-subtitle {
-                color: rgba(255,255,255,0.9);
-                font-size: 16px;
-                text-align: center;
-                margin-bottom: 32px;
-                font-weight: 300;
-            }
-    
+
             .contact-form {
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                gap: 20px;
-                max-width: 800px;
-                margin: 0 auto;
-                position: relative;
-                z-index: 1;
+                grid-template-columns: 1fr;
+                gap: 16px;
             }
-    
-            .form-group {
-                position: relative;
-            }
-    
-            .form-group input {
-                width: 100%;
-                padding: 16px 20px;
-                border: 2px solid rgba(255,255,255,0.2);
-                border-radius: 12px;
-                font-size: 16px;
-                background: rgba(255,255,255,0.95);
-                backdrop-filter: blur(10px);
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            }
-    
-            .form-group input:focus {
-                outline: none;
-                border-color: #1AAA8E;
-                background: white;
-                transform: translateY(-2px);
-                box-shadow: 
-                    0 8px 24px rgba(0,0,0,0.15),
-                    0 0 0 4px rgba(26, 170, 142, 0.2);
-            }
-    
-            .form-group input:valid {
-                border-color: #1DC3A3;
-                background: rgba(29, 195, 163, 0.1);
-            }
-    
-            .form-group input::placeholder {
-                color: #6b7280;
-                font-weight: 400;
-            }
-    
-            /* Icons für Inputs */
-            .form-group::before {
-                content: '';
-                position: absolute;
-                right: 16px;
-                top: 50%;
-                transform: translateY(-50%);
-                width: 20px;
-                height: 20px;
-                background-size: contain;
-                background-repeat: no-repeat;
-                opacity: 0.6;
-                z-index: 2;
-            }
-    
-            .form-group.name::before {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E");
-            }
-    
-            .form-group.email::before {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z'/%3E%3C/svg%3E");
-            }
-    
-            .form-group.phone::before {
-                background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%231AAA8E' viewBox='0 0 24 24'%3E%3Cpath d='M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z'/%3E%3C/svg%3E");
-            }
-    
-            .privacy-notice {
-                grid-column: 1 / -1;
-                font-size: 13px;
-                color: rgba(255,255,255,0.8);
-                text-align: center;
-                margin-top: 16px;
-                padding: 12px 20px;
-                background: rgba(26, 170, 142, 0.15);
-                border: 1px solid rgba(29, 195, 163, 0.3);
-                border-radius: 8px;
-                backdrop-filter: blur(10px);
-            }
-    
-            /* Responsive */
-            @media (max-width: 768px) {
-                .contact-form {
-                    grid-template-columns: 1fr;
-                    gap: 16px;
-                }
-                
-                .contact-form-section {
-                    padding: 24px 20px;
-                    margin: 20px 0;
-                }
-            }
-    
-            /* Animation beim Erscheinen */
-            .contact-form-section.show {
-                display: block;
-                animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-    
-            @keyframes slideInUp {
-                from {
-                    opacity: 0;
-                    transform: translateY(40px) scale(0.95);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                }
-            }
-    
-            /* Progress Step Update - Mit Rufheld Farben */
-            .progress-steps {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                margin-bottom: 40px;
-            }
-    
-            .step {
-                display: flex;
-                align-items: center;
-                color: #9ca3af;
-                font-weight: 500;
-            }
-    
-            .step.active {
-                color: #005CA0;
-            }
-    
-            .step.completed {
-                color: #1AAA8E;
-            }
-    
-            .step-number {
-                width: 32px;
-                height: 32px;
-                border-radius: 50%;
-                background: #e5e7eb;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                margin-right: 8px;
-                font-weight: 600;
-            }
-    
-            .step.active .step-number {
-                background: #005CA0;
-                color: white;
-            }
-    
-            .step.completed .step-number {
-                background: #1AAA8E;
-                color: white;
+            
+            .contact-form-section {
+                padding: 24px 20px;
+                margin: 20px 0;
             }
         }
     </style>
@@ -722,6 +682,7 @@
                         Weitere Bewertungen laden
                     </button>
                 </div>
+
                 <!-- Schickes Kontaktformular -->
                 <div id="contact-form-section" class="contact-form-section">
                     <h3>Ihre Kontaktdaten</h3>
@@ -743,6 +704,7 @@
                         </div>
                     </form>
                 </div>
+
                 <div id="selection-summary" class="selection-summary">
                     <div class="summary-content">
                         <div class="summary-text">
@@ -780,21 +742,23 @@
     </div>
 
     <script>
-        // Diese Variablen ganz oben hinzufügen
-        let contactFormVisible = false;
-        let contactDataComplete = false;
-        // Configuration - Replace with your actual API endpoint
+        // Configuration
         const API_BASE_URL = 'https://rufheld-review-mvp-production.up.railway.app';
         const PRICE_PER_REVIEW = 39.99;
         
         // Global state
         let selectedPlaceId = null;
+        let selectedBusiness = null;
         let allReviews = [];
         let selectedReviews = new Set();
         let currentOffset = 0;
         let hasMoreReviews = true;
         let autocompleteService = null;
         let placesService = null;
+
+        // Kontaktformular state
+        let contactFormVisible = false;
+        let contactDataComplete = false;
 
         // Initialize Google Places API
         function initializeGooglePlaces() {
@@ -855,6 +819,7 @@
 
         function selectBusiness(prediction) {
             selectedPlaceId = prediction.place_id;
+            selectedBusiness = prediction;
             document.getElementById('business-search').value = prediction.description;
             hideAutocomplete();
             
@@ -977,7 +942,7 @@
                 card.classList.remove('selected');
             }
 
-            updateSelectionSummary();
+            updateSelection();
         }
 
         function selectByRating(rating) {
@@ -992,7 +957,7 @@
                 }
             });
 
-            updateSelectionSummary();
+            updateSelection();
             
             // Track bulk selection
             trackEvent('AddToCart', {
@@ -1008,26 +973,32 @@
                 card.classList.remove('selected');
                 card.querySelector('.review-checkbox').checked = false;
             });
-            updateSelectionSummary();
+            updateSelection();
         }
 
-        function updateSelectionSummary() {
-            const count = selectedReviews.size;
-            const total = count * PRICE_PER_REVIEW;
+        // ZENTRALE FUNKTION - Updated alles
+        function updateSelection() {
+            const selectedCount = selectedReviews.size;
+            const totalPrice = selectedCount * PRICE_PER_REVIEW;
             
+            // Update UI
             document.getElementById('selected-count').textContent = 
-                `${count} Bewertung${count !== 1 ? 'en' : ''} ausgewählt`;
+                `${selectedCount} Bewertung${selectedCount !== 1 ? 'en' : ''} ausgewählt`;
             document.getElementById('total-price').textContent = 
-                `€${total.toFixed(2).replace('.', ',')}`;
+                `€${totalPrice.toFixed(2).replace('.', ',')}`;
 
+            // Show/hide summary section
             const summary = document.getElementById('selection-summary');
-            if (count > 0) {
+            if (selectedCount > 0) {
                 summary.style.display = 'block';
                 document.getElementById('step3').classList.add('active');
             } else {
                 summary.style.display = 'none';
                 document.getElementById('step3').classList.remove('active');
             }
+
+            // Kontaktformular Logic
+            toggleContactForm();
         }
 
         function loadMoreReviews() {
@@ -1035,81 +1006,36 @@
             loadReviews();
         }
 
-        function submitOrder() {
-            if (selectedReviews.size === 0) {
-                alert('Bitte wählen Sie mindestens eine Bewertung aus.');
-                return;
-            }
-
-            // Track order initiation
-            trackEvent('InitiateCheckout', {
-                content_type: 'reviews',
-                value: selectedReviews.size * PRICE_PER_REVIEW,
-                currency: 'EUR',
-                num_items: selectedReviews.size
-            });
-
-            // For MVP, just show success message
-            alert(`Vielen Dank! Wir haben Ihre Anfrage für ${selectedReviews.size} Bewertung${selectedReviews.size !== 1 ? 'en' : ''} erhalten. Gesamtwert: €${(selectedReviews.size * PRICE_PER_REVIEW).toFixed(2).replace('.', ',')} (nur bei erfolgreichem Ergebnis). Wir melden uns innerhalb von 24 Stunden bei Ihnen.`);
-
-            // Here you would normally send the data to your backend
-            console.log('Selected reviews:', Array.from(selectedReviews));
-            console.log('Place ID:', selectedPlaceId);
-            console.log('Total price:', selectedReviews.size * PRICE_PER_REVIEW);
-        }
-
-        // Hide autocomplete when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!e.target.closest('.search-container')) {
-                hideAutocomplete();
-            }
-        });
-
-        // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load Google Places API
-            const script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAdTWVrvY-dQycOShshqTuaJnAe074u9ME&libraries=places&callback=initializeGooglePlaces';
-            script.async = true;
-            script.defer = true;
-            document.head.appendChild(script);
-        });
-
-        // Kontaktformular Logic - In Ihr JavaScript einfügen
-
-        // Globale Variablen
-        let contactFormVisible = false;
-        let contactDataComplete = false;
-        
-        // Funktion um Kontaktformular zu zeigen/verstecken
+        // ===== KONTAKTFORMULAR LOGIC =====
         function toggleContactForm() {
-            const contactSection = document.querySelector('.contact-form-section');
-            const selectedReviews = getSelectedReviews();
+            const contactSection = document.getElementById('contact-form-section');
+            const selectedCount = selectedReviews.size;
+            const businessSelected = selectedBusiness !== null;
             
-            if (selectedReviews.length > 0 && !contactFormVisible) {
-                // Zeige Kontaktformular
+            if (selectedCount > 0 && businessSelected && !contactFormVisible) {
                 contactSection.style.display = 'block';
-                contactSection.classList.add('show');
+                setTimeout(() => {
+                    contactSection.classList.add('show');
+                }, 50);
                 contactFormVisible = true;
                 
-                // Scroll zu Kontaktformular
                 contactSection.scrollIntoView({ 
                     behavior: 'smooth',
                     block: 'center'
                 });
                 
-                // Verstecke Preis-Button bis Kontaktdaten vollständig
                 updatePricingVisibility();
-            } else if (selectedReviews.length === 0) {
-                // Verstecke Kontaktformular wenn keine Reviews ausgewählt
-                contactSection.style.display = 'none';
+            } else if (selectedCount === 0) {
+                contactSection.classList.remove('show');
+                setTimeout(() => {
+                    contactSection.style.display = 'none';
+                }, 300);
                 contactFormVisible = false;
                 contactDataComplete = false;
                 updatePricingVisibility();
             }
         }
-        
-        // Kontaktdaten Validierung
+
         function validateContactForm() {
             const name = document.getElementById('customerName').value.trim();
             const email = document.getElementById('customerEmail').value.trim();
@@ -1124,81 +1050,28 @@
             
             return isComplete;
         }
-        
-        // Preis-Section und Button State updaten
+
         function updatePricingVisibility() {
             const summarySection = document.getElementById('selection-summary');
-            const orderBtn = summarySection.querySelector('.order-btn');
-            const selectedReviews = getSelectedReviews();
+            const orderBtn = summarySection?.querySelector('.order-btn');
             
-            if (selectedReviews.length > 0) {
-                // ✅ Preis-Section immer zeigen wenn Reviews ausgewählt
-                summarySection.style.display = 'block';
-                
-                // Button State basierend auf Kontaktdaten
+            if (orderBtn && selectedReviews.size > 0) {
                 if (contactDataComplete) {
                     // ✅ Aktivierter Button
                     orderBtn.disabled = false;
                     orderBtn.style.opacity = '1';
                     orderBtn.style.cursor = 'pointer';
-                    orderBtn.style.backgroundColor = '#10b981'; // Grün
-                    // ✅ Text bleibt gleich!
+                    orderBtn.style.backgroundColor = '#1AAA8E';
                 } else {
                     // ❌ Deaktivierter Button  
                     orderBtn.disabled = true;
                     orderBtn.style.opacity = '0.5';
                     orderBtn.style.cursor = 'not-allowed';
-                    orderBtn.style.backgroundColor = '#9ca3af'; // Grau
-                    // ✅ Text bleibt gleich: "Kostenlose Prüfung anfragen"
+                    orderBtn.style.backgroundColor = '#9ca3af';
                 }
-            } else {
-                // Keine Reviews = alles verstecken
-                summarySection.style.display = 'none';
             }
         }
-        
-        // Event Listeners für Kontaktformular
-        document.addEventListener('DOMContentLoaded', function() {
-            // Input Event Listeners
-            ['customerName', 'customerEmail', 'customerPhone'].forEach(id => {
-                const input = document.getElementById(id);
-                if (input) {
-                    input.addEventListener('input', validateContactForm);
-                    input.addEventListener('blur', validateContactForm);
-                }
-            });
-        });
-        
-        // Konkrete updateSelection Funktion
-        function updateSelection() {
-            const selectedCheckboxes = document.querySelectorAll('.review-checkbox:checked');
-            const selectedCount = selectedCheckboxes.length;
-            const pricePerReview = 39.99;
-            const totalPrice = selectedCount * pricePerReview;
-            
-            // Count und Preis Update
-            const countElement = document.getElementById('selected-count');
-            const priceElement = document.getElementById('total-price');
-            
-            if (countElement) {
-                countElement.textContent = `${selectedCount} Bewertung${selectedCount !== 1 ? 'en' : ''} ausgewählt`;
-            }
-            
-            if (priceElement) {
-                priceElement.textContent = `€${totalPrice.toFixed(2)}`;
-            }
-            
-            // Summary Section zeigen/verstecken
-            const summarySection = document.getElementById('selection-summary');
-            if (summarySection) {
-                summarySection.style.display = selectedCount > 0 ? 'block' : 'none';
-            }
-            
-            // Kontaktformular Logic
-            toggleContactForm();
-        }
-        
-        // Konkrete submitOrder Funktion  
+
         function submitOrder() {
             // ✅ Prüfe ob Kontaktdaten vollständig sind
             if (!validateContactForm()) {
@@ -1207,27 +1080,26 @@
             }
             
             // ✅ Prüfe ob Reviews ausgewählt sind
-            const selectedReviews = getSelectedReviews();
-            if (selectedReviews.length === 0) {
+            if (selectedReviews.size === 0) {
                 alert('Bitte wählen Sie mindestens eine Bewertung aus.');
                 return false;
             }
             
             // Sammle alle Order-Daten
             const orderData = {
-                businessName: window.selectedBusiness?.name || 'Unbekannt',
-                businessAddress: window.selectedBusiness?.formatted_address || '',
+                businessName: selectedBusiness?.description || 'Unbekannt',
+                businessPlaceId: selectedPlaceId,
                 customerName: document.getElementById('customerName').value.trim(),
                 customerEmail: document.getElementById('customerEmail').value.trim(),
                 customerPhone: document.getElementById('customerPhone').value.trim(),
-                selectedReviews: selectedReviews.map(checkbox => {
-                    const reviewCard = checkbox.closest('.review-card');
+                selectedReviews: Array.from(selectedReviews).map(reviewId => {
+                    const review = allReviews.find(r => r.id === reviewId);
                     return {
-                        reviewId: checkbox.value,
-                        reviewerName: reviewCard?.querySelector('.reviewer-name')?.textContent || '',
-                        reviewText: reviewCard?.querySelector('.review-text')?.textContent || '',
-                        rating: reviewCard?.querySelectorAll('.star.filled').length || 0,
-                        date: reviewCard?.querySelector('.review-date')?.textContent || ''
+                        reviewId: reviewId,
+                        reviewerName: review?.reviewer || '',
+                        reviewText: review?.text || '',
+                        rating: review?.rating || 0,
+                        date: review?.datetime || ''
                     };
                 }),
                 totalPrice: document.getElementById('total-price')?.textContent || '€0,00',
@@ -1259,7 +1131,15 @@
             .then(data => {
                 console.log('Order submitted successfully:', data);
                 
-                // Redirect zur Thank You Page oder zeige Success
+                // Track conversion
+                trackEvent('Purchase', {
+                    content_type: 'reviews',
+                    value: selectedReviews.size * PRICE_PER_REVIEW,
+                    currency: 'EUR',
+                    num_items: selectedReviews.size
+                });
+                
+                // Success message
                 showThankYouMessage(orderData);
                 
             })
@@ -1274,101 +1154,36 @@
             
             return true;
         }
-        
-        // Hilfsfunktion für Thank You Message
+
         function showThankYouMessage(orderData) {
-            // Temporäre Lösung - später durch echte Thank You Page ersetzen
             alert(`Vielen Dank ${orderData.customerName}! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns binnen 24h bei Ihnen.`);
-            
-            // Optional: Seite zurücksetzen
             location.reload();
         }
-        
-        // Hilfsfunktion um ausgewählte Reviews zu bekommen
-        function getSelectedReviews() {
-            return Array.from(document.querySelectorAll('.review-checkbox:checked'));
-        }
-            
-            // Sammle alle Daten
-            const orderData = {
-                customerName: document.getElementById('customerName').value.trim(),
-                customerEmail: document.getElementById('customerEmail').value.trim(),
-                customerPhone: document.getElementById('customerPhone').value.trim(),
-                selectedReviews: selectedReviews.length,
-                totalPrice: document.getElementById('total-price').textContent
-            };
-            
-            console.log('Order Data:', orderData);
-            
-            // Hier dann der API Call + Thank You Page
-            // showThankYouPage(orderData);
-            
-            return true;
 
-            // Diese Funktionen hinzufügen
-            function toggleContactForm() {
-                const contactSection = document.getElementById('contact-form-section');
-                const selectedReviews = getSelectedReviews();
-                const businessSelected = isBusinessSelected();
-                
-                if (selectedReviews.length > 0 && businessSelected && !contactFormVisible) {
-                    contactSection.style.display = 'block';
-                    setTimeout(() => {
-                        contactSection.classList.add('show');
-                    }, 50);
-                    contactFormVisible = true;
-                    
-                    contactSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
-                    
-                    updatePricingVisibility();
-                } else if (selectedReviews.length === 0 || !businessSelected) {
-                    contactSection.classList.remove('show');
-                    setTimeout(() => {
-                        contactSection.style.display = 'none';
-                    }, 300);
-                    contactFormVisible = false;
-                    contactDataComplete = false;
-                    updatePricingVisibility();
+        // Hide autocomplete when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                hideAutocomplete();
+            }
+        });
+
+        // Event Listeners für Kontaktformular
+        document.addEventListener('DOMContentLoaded', function() {
+            ['customerName', 'customerEmail', 'customerPhone'].forEach(id => {
+                const input = document.getElementById(id);
+                if (input) {
+                    input.addEventListener('input', validateContactForm);
+                    input.addEventListener('blur', validateContactForm);
                 }
-            }
-            
-            function isBusinessSelected() {
-                const reviewsContainer = document.getElementById('reviews-container');
-                if (reviewsContainer) {
-                    return reviewsContainer.children.length > 0;
-                }
-                return true;
-            }
-            
-            function validateContactForm() {
-                const name = document.getElementById('customerName').value.trim();
-                const email = document.getElementById('customerEmail').value.trim();
-                const phone = document.getElementById('customerPhone').value.trim();
-                
-                const isComplete = name.length > 0 && 
-                                  email.includes('@') && 
-                                  phone.length > 0;
-                                  
-                contactDataComplete = isComplete;
-                updatePricingVisibility();
-                
-                return isComplete;
-            }
-            
-            // Event Listeners hinzufügen
-            document.addEventListener('DOMContentLoaded', function() {
-                ['customerName', 'customerEmail', 'customerPhone'].forEach(id => {
-                    const input = document.getElementById(id);
-                    if (input) {
-                        input.addEventListener('input', validateContactForm);
-                        input.addEventListener('blur', validateContactForm);
-                    }
-                });
             });
-        }
+
+            // Load Google Places API
+            const script = document.createElement('script');
+            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyAdTWVrvY-dQycOShshqTuaJnAe074u9ME&libraries=places&callback=initializeGooglePlaces';
+            script.async = true;
+            script.defer = true;
+            document.head.appendChild(script);
+        });
     </script>
 </body>
 </html>
