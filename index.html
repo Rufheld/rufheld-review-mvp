@@ -844,7 +844,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Load Google Places API
             const script = document.createElement('script');
-            script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyC9EAdQyMzNQ1bHDhy82IgaZKmBfW-oDd8&libraries=places&callback=initializeGooglePlaces';
+            script.src = 'https://maps.googleapis.com/maps/api/js?key='+ GOOGLE_API_KEY + '&libraries=places&callback=initializeGooglePlaces';
             script.async = true;
             script.defer = true;
             document.head.appendChild(script);
