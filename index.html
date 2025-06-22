@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rufheld - Google Bewertungen prüfen lassen</title>
-    <meta name="description" content="Lassen Sie problematische Google Bewertungen professionell prüfen. Nur €39.99 pro Bewertung - Sie zahlen nur bei erfolgreichem Ergebnis.">
+    <title>Fake Google Reviews entfernen - Rufheld</title>
+    <meta name="description" content="Fake Google Reviews zerstören Ihr Geschäft? Wir entfernen unfaire Bewertungen in 24h - oder Sie zahlen nichts. 95% Erfolgsquote, nur €39,99 bei Erfolg.">
     
     <!-- Facebook Pixel Code -->
     <script>
@@ -33,7 +33,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
@@ -58,12 +58,382 @@
             margin-bottom: 10px;
             letter-spacing: -1px;
         }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-image {
+            height: 80px;
+            width: auto;
+            max-width: 400px;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+        }
         
         .tagline {
             font-size: 1.3rem;
             opacity: 0.95;
             margin-bottom: 30px;
             font-weight: 300;
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: white;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .success-rate {
+            background: linear-gradient(135deg, #1DC3A3, #00FF88);
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 700;
+            color: #00277C;
+            box-shadow: 0 4px 12px rgba(29, 195, 163, 0.4);
+            display: inline-block;
+        }
+
+        .hero-guarantee {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: white;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .guarantee-icon {
+            font-size: 1.3rem;
+        }
+
+        .pain-agitation {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(220, 53, 69, 0.1);
+            border: 2px solid #dc3545;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .pain-agitation p {
+            color: white;
+            font-size: 1.1rem;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* How it Works Section */
+        .how-it-works-section {
+            background: white;
+            padding: 50px 40px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .problem-agitation {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 40px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .problem-box, .solution-box {
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .problem-box {
+            background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+            border: 2px solid #fc8181;
+        }
+
+        .solution-box {
+            background: linear-gradient(135deg, #f0fff4 0%, #c6f6d5 100%);
+            border: 2px solid #1DC3A3;
+        }
+
+        .problem-box h3 {
+            color: #c53030;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .solution-box h3 {
+            color: #00277C;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .problem-box ul, .solution-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .problem-box li, .solution-box li {
+            padding: 8px 0;
+            font-weight: 500;
+        }
+
+        .problem-box li {
+            color: #742a2a;
+        }
+
+        .solution-box li {
+            color: #22543d;
+        }
+
+        .cta-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 25px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .process-step {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 1px solid #dee2e6;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 39, 124, 0.1);
+            border-color: #00277C;
+        }
+
+        .process-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .process-step h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #00277C;
+            margin-bottom: 15px;
+        }
+
+        .process-step p {
+            color: #6c757d;
+            line-height: 1.5;
+        }
+
+        .success-stats {
+            display: flex;
+            justify-content: center;
+            gap: 60px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #00277C;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .faq-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 39, 124, 0.15);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #00277C;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #1DC3A3;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding: 0 30px 25px 30px;
+            color: #495057;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Urgency Section */
+        .urgency-section {
+            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
+            padding: 50px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .urgency-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .urgency-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .urgency-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .urgency-stat {
+            text-align: center;
+        }
+
+        .urgency-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1DC3A3;
+            margin-bottom: 8px;
+        }
+
+        .urgency-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .urgency-cta {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .urgency-cta p {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
         }
         
         .main-content {
@@ -97,7 +467,7 @@
         }
         
         .step.active {
-            background: #2a5298;
+            background: #00277C;
             color: white;
         }
         
@@ -115,7 +485,7 @@
         
         .step.active .step-number {
             background: white;
-            color: #2a5298;
+            color: #00277C;
         }
         
         .section-title {
@@ -143,9 +513,9 @@
         
         .search-input:focus {
             outline: none;
-            border-color: #2a5298;
+            border-color: #00277C;
             background: white;
-            box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+            box-shadow: 0 0 0 3px rgba(0, 39, 124, 0.1);
         }
         
         .autocomplete-dropdown {
@@ -216,7 +586,7 @@
         
         .bulk-btn:hover {
             background: #f8f9fa;
-            border-color: #2a5298;
+            border-color: #00277C;
         }
         
         .review-card {
@@ -230,7 +600,7 @@
         }
         
         .review-card.selected {
-            border-color: #2a5298;
+            border-color: #00277C;
             background: #e3f2fd;
         }
         
@@ -312,7 +682,7 @@
 
         /* Schickes Kontaktformular CSS - Mit Rufheld Brandfarben */
         .contact-form-section {
-            background: linear-gradient(135deg, #005CA0 0%, #00277C 100%);
+            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
             border-radius: 16px;
             padding: 32px;
             margin: 32px 0;
@@ -456,7 +826,7 @@
         }
         
         .selection-summary {
-            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            background: linear-gradient(135deg, #00277C, #1DC3A3);
             color: white;
             padding: 25px;
             border-radius: 15px;
@@ -529,7 +899,7 @@
             width: 40px;
             height: 40px;
             border: 4px solid #f3f3f3;
-            border-top: 4px solid #2a5298;
+            border-top: 4px solid #00277C;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin: 0 auto 20px;
@@ -562,7 +932,7 @@
         
         .trust-icon {
             font-size: 2rem;
-            color: #2a5298;
+            color: #00277C;
             margin-bottom: 10px;
         }
         
@@ -588,6 +958,11 @@
             
             .logo {
                 font-size: 2rem;
+            }
+
+            .logo-image {
+                height: 60px;
+                max-width: 300px;
             }
             
             .tagline {
@@ -621,17 +996,173 @@
                 padding: 24px 20px;
                 margin: 20px 0;
             }
+
+            .hero-title {
+                font-size: 1.8rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-guarantee {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .how-it-works-section {
+                padding: 40px 20px;
+            }
+
+            .process-steps {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .success-stats {
+                gap: 30px;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .faq-question {
+                padding: 20px;
+                font-size: 1rem;
+            }
+
+            .faq-answer p {
+                padding: 0 20px 20px 20px;
+            }
+
+            .problem-agitation {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .pain-agitation {
+                margin-top: 20px;
+                padding: 15px;
+            }
+
+            .pain-agitation p {
+                font-size: 1rem;
+            }
+
+            .urgency-content h2 {
+                font-size: 1.6rem;
+            }
+
+            .urgency-content p {
+                font-size: 1.1rem;
+            }
+
+            .urgency-stats {
+                gap: 30px;
+            }
+
+            .urgency-number {
+                font-size: 2rem;
+            }
+
+            .urgency-cta p {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header class="header">
-            <h1 class="logo">Rufheld</h1>
-            <p class="tagline">Google Bewertungen professionell prüfen lassen</p>
+            <div class="logo-container">
+                <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" alt="Rufheld Logo" class="logo-image">
+            </div>
+            
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <h1 class="hero-title">Fake Reviews zerstören Ihr Geschäft?</h1>
+                <p class="hero-subtitle">
+                    <strong class="success-rate">Wir entfernen unfaire Google-Bewertungen in 24h - oder Sie zahlen nichts</strong>
+                </p>
+                <div class="hero-guarantee">
+                    <div class="guarantee-item">
+                        <span class="guarantee-icon">⚡</span>
+                        <span>Löschung normalerweise binnen 1 Stunde</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <span class="guarantee-icon">💰</span>
+                        <span>Keine Löschung = Keine Zahlung</span>
+                    </div>
+                    <div class="guarantee-item">
+                        <span class="guarantee-icon">🎯</span>
+                        <span>Nur €39,99 pro gelöschter Bewertung</span>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main class="main-content">
+            <!-- How it Works Section -->
+            <div class="how-it-works-section">
+                <h2 class="section-title">🚀 So retten wir Ihre Reputation</h2>
+                <p class="section-subtitle">Wir haben das schon 1.000+ mal gemacht. Sie fokussieren sich auf Ihr Geschäft - wir kümmern uns um die unfairen Reviews.</p>
+                
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="process-icon">📱</div>
+                        <h3>1. Problematische Reviews zeigen</h3>
+                        <p>Sie wählen die unfairen Bewertungen aus, die Ihrem Geschäft schaden</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon">🎯</div>
+                        <h3>2. Wir kämpfen für Sie</h3>
+                        <p>Unser Expertenteam reicht die Entfernung bei Google ein - mit bewährten Strategien</p>
+                    </div>
+                    <div class="process-step">
+                        <div class="process-icon">🏆</div>
+                        <h3>3. Ihre Reputation ist gerettet</h3>
+                        <p>Unfaire Reviews verschwinden in 24h - oder Sie zahlen keinen Cent</p>
+                    </div>
+                </div>
+                
+                <div class="problem-agitation">
+                    <div class="problem-box">
+                        <h3>❌ Was passiert, wenn Sie NICHT handeln?</h3>
+                        <ul>
+                            <li>Neue Kunden buchen bei Ihren Konkurrenten</li>
+                            <li>Ihr guter Ruf wird von Trollen zerstört</li>
+                            <li>Umsatz sinkt jeden Monat weiter</li>
+                            <li>Sie kämpfen allein gegen Google-Algorithmen</li>
+                        </ul>
+                    </div>
+                    <div class="solution-box">
+                        <h3>✅ Ihr Leben nach Rufheld:</h3>
+                        <ul>
+                            <li>4+ Sterne Profil zieht wieder Neukunden an</li>
+                            <li>Ihre harte Arbeit wird endlich belohnt</li>
+                            <li>Das Telefon klingelt wieder häufiger</li>
+                            <li>Sie schlafen ruhig - wir schützen Ihren Ruf</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="success-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div class="stat-label">Erfolgsquote</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">24h</div>
+                        <div class="stat-label">Bis zur Entfernung</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">1.000+</div>
+                        <div class="stat-label">Erfolgreiche Fälle</div>
+                    </div>
+                </div>
+            </div>
+
             <div class="content-section">
                 <div class="step-indicator">
                     <div class="step active">
@@ -649,7 +1180,8 @@
                 </div>
 
                 <div id="search-section">
-                    <h2 class="section-title">Welches Unternehmen möchten Sie prüfen lassen?</h2>
+                    <h2 class="section-title">🎯 Jetzt handeln, bevor weitere Kunden abspringen</h2>
+                    <p class="cta-subtitle">Geben Sie uns Ihr Google-Unternehmensprofil - wir zeigen Ihnen sofort, welche Reviews wir entfernen können</p>
                     <div class="search-container">
                         <input 
                             type="text" 
@@ -713,7 +1245,7 @@
                             <div class="price-note">Zahlung nur bei erfolgreichem Ergebnis</div>
                         </div>
                         <button class="order-btn" onclick="submitOrder()">
-                            Kostenlose Prüfung anfragen
+                            Meine Reviews jetzt bereinigen
                         </button>
                     </div>
                 </div>
@@ -737,6 +1269,15 @@
                     <div class="trust-title">Schnelle Bearbeitung</div>
                     <div class="trust-text">Erste Rückmeldung oft binnen 24-48h</div>
                 </div>
+            </div>
+            
+            <!-- WhatsApp Contact Button -->
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://wa.me/4915129658221?text=Hallo%20Rufheld%20Team,%20ich%20hätte%20Fragen%20zu%20Ihrem%20Service..." 
+                   target="_blank" 
+                   style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; background: linear-gradient(135deg, #25D366, #128C7E); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);">
+                    💬 WhatsApp: +49 1512 9658221
+                </a>
             </div>
         </div>
     </div>
@@ -1156,8 +1697,17 @@
         }
 
         function showThankYouMessage(orderData) {
-            alert(`Vielen Dank ${orderData.customerName}! Ihre Anfrage wurde erfolgreich gesendet. Wir melden uns binnen 24h bei Ihnen.`);
-            location.reload();
+            // Prepare URL parameters for thank you page
+            const params = new URLSearchParams({
+                business: orderData.businessName,
+                reviews: selectedReviews.size,
+                name: orderData.customerName,
+                email: orderData.customerEmail,
+                price: orderData.totalPrice
+            });
+            
+            // Redirect to thank you page
+            window.location.href = `thank-you.html?${params.toString()}`;
         }
 
         // Hide autocomplete when clicking outside
@@ -1184,6 +1734,26 @@
             script.defer = true;
             document.head.appendChild(script);
         });
+
+        // FAQ Toggle Functionality
+        function toggleFaq(element) {
+            const faqItem = element.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all other FAQ items
+            document.querySelectorAll('.faq-item.active').forEach(item => {
+                if (item !== faqItem) {
+                    item.classList.remove('active');
+                }
+            });
+            
+            // Toggle current FAQ item
+            if (isActive) {
+                faqItem.classList.remove('active');
+            } else {
+                faqItem.classList.add('active');
+            }
+        }
     </script>
 </body>
 </html>
