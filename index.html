@@ -297,145 +297,7 @@
             font-weight: 500;
         }
 
-        /* FAQ Section */
-        .faq-section {
-            background: #f8f9fa;
-            padding: 60px 0;
-        }
-
-        .faq-intro {
-            text-align: center;
-            font-size: 1.1rem;
-            color: #6c757d;
-            margin-bottom: 40px;
-            font-style: italic;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .faq-grid {
-            max-width: 800px;
-            margin: 0 auto;
-            display: grid;
-            gap: 20px;
-        }
-
-        .faq-item {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            box-shadow: 0 4px 16px rgba(0, 39, 124, 0.15);
-        }
-
-        .faq-question {
-            padding: 25px 30px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            color: #00277C;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question:hover {
-            background: #f8f9fa;
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            color: #1DC3A3;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-            background: #f8f9fa;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-        }
-
-        .faq-answer p {
-            padding: 0 30px 25px 30px;
-            color: #495057;
-            line-height: 1.6;
-            margin: 0;
-        }
-
-        /* Urgency Section */
-        .urgency-section {
-            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
-            padding: 50px 0;
-            color: white;
-            text-align: center;
-        }
-
-        .urgency-content h2 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .urgency-content p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.95;
-        }
-
-        .urgency-stats {
-            display: flex;
-            justify-content: center;
-            gap: 50px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .urgency-stat {
-            text-align: center;
-        }
-
-        .urgency-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #1DC3A3;
-            margin-bottom: 8px;
-        }
-
-        .urgency-label {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        .urgency-cta {
-            background: rgba(255,255,255,0.1);
-            padding: 20px;
-            border-radius: 12px;
-            margin-top: 30px;
-            backdrop-filter: blur(10px);
-        }
-
-        .urgency-cta p {
-            margin: 0;
-            font-size: 1.3rem;
-            font-weight: 600;
-        }
-        
+        /* NEUE Progressive Step Indicator Styles */
         .main-content {
             background: white;
             border-radius: 20px;
@@ -447,45 +309,100 @@
         .content-section {
             padding: 40px;
         }
-        
-        .step-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 40px;
-            gap: 20px;
+
+        .progressive-steps {
+            margin-bottom: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
-        .step {
+
+        .progress-counter {
+            font-size: 0.9rem;
+            color: #6c757d;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .step-progress {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            border-radius: 25px;
-            background: #f8f9fa;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
         }
-        
-        .step.active {
+
+        .step-current {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            border-radius: 25px;
             background: #00277C;
             color: white;
+            font-weight: 600;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(0, 39, 124, 0.3);
         }
-        
+
         .step-number {
-            width: 25px;
-            height: 25px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: #dee2e6;
+            background: white;
+            color: #00277C;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 14px;
-            font-weight: 600;
+            font-weight: 700;
         }
-        
-        .step.active .step-number {
-            background: white;
-            color: #00277C;
+
+        .step-completed {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #e8f5e8;
+            color: #2d5a2d;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .step-completed .checkmark {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #1DC3A3;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .step-upcoming {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.85rem;
+            opacity: 0.6;
+        }
+
+        .step-upcoming .step-number-small {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #dee2e6;
+            color: #6c757d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
         }
         
         .section-title {
@@ -909,6 +826,145 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* FAQ Section */
+        .faq-section {
+            background: #f8f9fa;
+            padding: 60px 0;
+        }
+
+        .faq-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #6c757d;
+            margin-bottom: 40px;
+            font-style: italic;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 39, 124, 0.15);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: #00277C;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #f8f9fa;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #1DC3A3;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding: 0 30px 25px 30px;
+            color: #495057;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Urgency Section */
+        .urgency-section {
+            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
+            padding: 50px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .urgency-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .urgency-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+        }
+
+        .urgency-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .urgency-stat {
+            text-align: center;
+        }
+
+        .urgency-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1DC3A3;
+            margin-bottom: 8px;
+        }
+
+        .urgency-label {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .urgency-cta {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .urgency-cta p {
+            margin: 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
         
         .trust-indicators {
             background: #f8f9fa;
@@ -973,9 +1029,13 @@
                 padding: 25px;
             }
             
-            .step-indicator {
+            .step-progress {
                 flex-direction: column;
-                align-items: center;
+                align-items: stretch;
+            }
+
+            .step-current, .step-completed {
+                justify-content: center;
             }
             
             .summary-content {
@@ -1083,7 +1143,7 @@
             <div class="hero-section">
                 <h1 class="hero-title">Negative Bewertungen zerstören dein Geschäft?</h1>
                 <p class="hero-subtitle">
-                    <strong class="success-rate">Wir sind Unternehmer wie du - und haben schon 17.500+ negative Bewertungen vernichtet. Kein Erfolg = Kein Cent!</strong>
+                    <strong class="success-rate">Wir sind Unternehmer wie du - und haben schon 17.500+ negative Bewertungen vernichtet. Kein Erfolg = Keine Bezahlung!</strong>
                 </p>
                 <div class="hero-guarantee">
                     <div class="guarantee-item">
@@ -1107,142 +1167,84 @@
             </div>
         </header>
 
+        <!-- How it Works Section -->
+        <div class="how-it-works-section">
+            <h2 class="section-title">⚔️ Wie wir dich von den negativen Bewertungen befreien</h2>
+            <p class="section-subtitle">Wir haben das schon für 2.000+ Unternehmer gemacht. Du kümmerst dich um dein Business - wir vernichten die unfairen Angriffe auf deinen Ruf.</p>
+            
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="process-icon">📱</div>
+                    <h3>1. Du zeigst uns die Bewertungen</h3>
+                    <p>Du wählst die negativen Bewertungen aus, die deinem Geschäft schaden</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-icon">🎯</div>
+                    <h3>2. Wir gehen in den Angriff</h3>
+                    <p>Unser Expertenteam kämpft für dich bei Google - mit bewährten Strategien aus 17.500+ Siegen</p>
+                </div>
+                <div class="process-step">
+                    <div class="process-icon">🏆</div>
+                    <h3>3. Dein Ruf ist gerettet</h3>
+                    <p>Negative Bewertungen verschwinden in 24h - oder du zahlst keinen Cent</p>
+                </div>
+            </div>
+            
+            <div class="problem-agitation">
+                <div class="problem-box">
+                    <h3>❌ Was passiert, wenn du NICHT handelst?</h3>
+                    <ul>
+                        <li>Neue Kunden gehen zu deiner Konkurrenz</li>
+                        <li>Negative Bewertungen zerstören jahrelange harte Arbeit</li>
+                        <li>Dein Umsatz sinkt jeden Monat weiter</li>
+                        <li>Du kämpfst allein gegen Google-Algorithmen</li>
+                        <li>Während 90% hilflos zusehen, verlierst du Geld</li>
+                    </ul>
+                </div>
+                <div class="solution-box">
+                    <h3>✅ Dein Geschäft nach unserem Sieg:</h3>
+                    <ul>
+                        <li>4.5+ Sterne Profil zieht wieder Neukunden an</li>
+                        <li>Deine harte Arbeit wird endlich belohnt</li>
+                        <li>Das Telefon klingelt wieder häufiger</li>
+                        <li>Du schläfst ruhig - wir schützen deinen Ruf</li>
+                        <li>Du gehörst zu den 10%, die handeln</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="success-stats">
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Erfolgsquote</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">17.500+</div>
+                    <div class="stat-label">Vernichtete negative Bewertungen</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.000+</div>
+                    <div class="stat-label">Gerettete Unternehmen</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEUE POSITION: Form Section HIER - vor Kundenmeinungen -->
         <main class="main-content">
-            <!-- How it Works Section -->
-            <div class="how-it-works-section">
-                <h2 class="section-title">⚔️ Wie wir dich von den negativen Bewertungen befreien</h2>
-                <p class="section-subtitle">Wir haben das schon für 2.000+ Unternehmer gemacht. Du kümmerst dich um dein Business - wir vernichten die unfairen Angriffe auf deinen Ruf.</p>
-                
-                <div class="process-steps">
-                    <div class="process-step">
-                        <div class="process-icon">📱</div>
-                        <h3>1. Du zeigst uns die Bewertungen</h3>
-                        <p>Du wählst die negativen Bewertungen aus, die deinem Geschäft schaden</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-icon">🎯</div>
-                        <h3>2. Wir gehen in den Angriff</h3>
-                        <p>Unser Expertenteam kämpft für dich bei Google - mit bewährten Strategien aus 17.500+ Siegen</p>
-                    </div>
-                    <div class="process-step">
-                        <div class="process-icon">🏆</div>
-                        <h3>3. Dein Ruf ist gerettet</h3>
-                        <p>Negative Bewertungen verschwinden in 24h - oder du zahlst keinen Cent</p>
-                    </div>
-                </div>
-                
-                <div class="problem-agitation">
-                    <div class="problem-box">
-                        <h3>❌ Was passiert, wenn du NICHT handelst?</h3>
-                        <ul>
-                            <li>Neue Kunden gehen zu deiner Konkurrenz</li>
-                            <li>Negative Bewertungen zerstören jahrelange harte Arbeit</li>
-                            <li>Dein Umsatz sinkt jeden Monat weiter</li>
-                            <li>Du kämpfst allein gegen Google-Algorithmen</li>
-                            <li>Während 90% hilflos zusehen, verlierst du Geld</li>
-                        </ul>
-                    </div>
-                    <div class="solution-box">
-                        <h3>✅ Dein Geschäft nach unserem Sieg:</h3>
-                        <ul>
-                            <li>4.5+ Sterne Profil zieht wieder Neukunden an</li>
-                            <li>Deine harte Arbeit wird endlich belohnt</li>
-                            <li>Das Telefon klingelt wieder häufiger</li>
-                            <li>Du schläfst ruhig - wir schützen deinen Ruf</li>
-                            <li>Du gehörst zu den 10%, die handeln</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <div class="success-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">95%</div>
-                        <div class="stat-label">Erfolgsquote</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">17.500+</div>
-                        <div class="stat-label">Vernichtete negative Bewertungen</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">2.000+</div>
-                        <div class="stat-label">Gerettete Unternehmen</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Kundenmeinungen Section -->
-            <div style="background: white; padding: 60px 0; border-bottom: 1px solid #e9ecef;">
-                <div class="container">
-                    <h2 style="text-align: center; font-size: 2rem; color: #00277C; margin-bottom: 15px; font-weight: 600;">Was andere Unternehmer sagen</h2>
-                    <p style="text-align: center; font-size: 1.1rem; color: #6c757d; margin-bottom: 50px; font-style: italic; max-width: 600px; margin-left: auto; margin-right: auto;">
-                        Von Unternehmern für Unternehmer - echte Erfahrungen aus verschiedenen Branchen
-                    </p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
-                        <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
-                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                                <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">MH</div>
-                                <div>
-                                    <div style="font-weight: 600; color: #00277C;">Maria Hofmann</div>
-                                    <div style="color: #6c757d; font-size: 0.9rem;">Restaurant "Bella Vista", München</div>
-                                </div>
-                            </div>
-                            <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
-                                "3 Fake Bewertungen haben uns fast ruiniert. In nur 1 Stunde waren alle weg! Endlich können wir uns wieder aufs Kochen konzentrieren statt auf schlechte Bewertungen zu starren."
-                            </p>
-                            <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
-                        </div>
-
-                        <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
-                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                                <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">TK</div>
-                                <div>
-                                    <div style="font-weight: 600; color: #00277C;">Thomas Krüger</div>
-                                    <div style="color: #6c757d; font-size: 0.9rem;">Krüger Elektrotechnik, Hamburg</div>
-                                </div>
-                            </div>
-                            <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
-                                "Unglaublich! Ein neidischer Konkurrent hatte uns 5 1-Sterne Bewertungen reingedrückt. Rufheld hat alle noch am selben Tag gelöscht. Jetzt läuft das Geschäft wieder normal."
-                            </p>
-                            <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
-                        </div>
-
-                        <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
-                            <div style="display: flex; gap: 15px; margin-bottom: 15px;">
-                                <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">SP</div>
-                                <div>
-                                    <div style="font-weight: 600; color: #00277C;">Sandra Pohl</div>
-                                    <div style="color: #6c757d; font-size: 0.9rem;">Café Sonnenschein, Berlin</div>
-                                </div>
-                            </div>
-                            <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
-                                "Als Kleinunternehmerin kann ich mir keine schlechten Bewertungen leisten. Rufheld versteht das. Schnell, ehrlich, und zahlen nur bei Erfolg - genau richtig für uns!"
-                            </p>
-                            <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="content-section">
-                <div class="step-indicator">
-                    <div class="step active">
-                        <div class="step-number">1</div>
-                        <span>Dein Unternehmen wählen</span>
-                    </div>
-                    <div class="step" id="step2">
-                        <div class="step-number">2</div>
-                        <span>Negative Bewertungen markieren</span>
-                    </div>
-                    <div class="step" id="step3">
-                        <div class="step-number">3</div>
-                        <span>Vernichtung starten</span>
+                <div class="progressive-steps" id="progressiveSteps">
+                    <div class="progress-counter">Schritt 1 von 3</div>
+                    <div class="step-progress">
+                        <div class="step-current">
+                            <div class="step-number">1</div>
+                            <span>Dein Unternehmen wählen</span>
+                        </div>
                     </div>
                 </div>
 
                 <div id="search-section">
-                    <h2 class="section-title">🎯 Jetzt handeln, bevor weitere Kunden abspringen</h2>
-                    <p class="cta-subtitle">Gib uns dein Google-Unternehmensprofil - wir zeigen dir sofort, welche Bewertungen wir vernichten können</p>
+                    <h2 class="section-title" id="sectionTitle">🎯 Jetzt handeln, bevor weitere Kunden abspringen</h2>
+                    <p class="cta-subtitle" id="sectionSubtitle">Gib uns dein Google-Unternehmensprofil - wir zeigen dir sofort, welche Bewertungen wir vernichten können</p>
                     <div class="search-container">
                         <input 
                             type="text" 
@@ -1312,6 +1314,60 @@
                 </div>
             </div>
         </main>
+
+        <!-- Kundenmeinungen Section - JETZT NACH der Form -->
+        <div style="background: white; padding: 60px 0; border-bottom: 1px solid #e9ecef;">
+            <div class="container">
+                <h2 style="text-align: center; font-size: 2rem; color: #00277C; margin-bottom: 15px; font-weight: 600;">Was andere Unternehmer sagen</h2>
+                <p style="text-align: center; font-size: 1.1rem; color: #6c757d; margin-bottom: 50px; font-style: italic; max-width: 600px; margin-left: auto; margin-right: auto;">
+                    Von Unternehmern für Unternehmer - echte Erfahrungen aus verschiedenen Branchen
+                </p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+                    <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                            <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">MH</div>
+                            <div>
+                                <div style="font-weight: 600; color: #00277C;">Maria Hofmann</div>
+                                <div style="color: #6c757d; font-size: 0.9rem;">Restaurant "Bella Vista", München</div>
+                            </div>
+                        </div>
+                        <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
+                            "3 Fake Bewertungen haben uns fast ruiniert. In nur 1 Stunde waren alle weg! Endlich können wir uns wieder aufs Kochen konzentrieren statt auf schlechte Bewertungen zu starren."
+                        </p>
+                        <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                            <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">TK</div>
+                            <div>
+                                <div style="font-weight: 600; color: #00277C;">Thomas Krüger</div>
+                                <div style="color: #6c757d; font-size: 0.9rem;">Krüger Elektrotechnik, Hamburg</div>
+                            </div>
+                        </div>
+                        <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
+                            "Unglaublich! Ein neidischer Konkurrent hatte uns 5 1-Sterne Bewertungen reingedrückt. Rufheld hat alle noch am selben Tag gelöscht. Jetzt läuft das Geschäft wieder normal."
+                        </p>
+                        <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
+                    </div>
+
+                    <div style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 30px; border-radius: 16px; border-left: 4px solid #1DC3A3;">
+                        <div style="display: flex; gap: 15px; margin-bottom: 15px;">
+                            <div style="background: #1DC3A3; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 1.2rem;">SP</div>
+                            <div>
+                                <div style="font-weight: 600; color: #00277C;">Sandra Pohl</div>
+                                <div style="color: #6c757d; font-size: 0.9rem;">Café Sonnenschein, Berlin</div>
+                            </div>
+                        </div>
+                        <p style="color: #495057; line-height: 1.6; margin: 0; font-style: italic;">
+                            "Als Kleinunternehmerin kann ich mir keine schlechten Bewertungen leisten. Rufheld versteht das. Schnell, ehrlich, und zahlen nur bei Erfolg - genau richtig für uns!"
+                        </p>
+                        <div style="color: #ffc107; margin-top: 10px;">⭐⭐⭐⭐⭐</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- FAQ Section -->
         <div class="faq-section">
@@ -1478,10 +1534,79 @@
         let hasMoreReviews = true;
         let autocompleteService = null;
         let placesService = null;
+        let currentProgressStep = 1;
 
         // Kontaktformular state
         let contactFormVisible = false;
         let contactDataComplete = false;
+
+        // Progressive Steps Data
+        const stepData = {
+            1: {
+                title: "🎯 Jetzt handeln, bevor weitere Kunden abspringen",
+                subtitle: "Gib uns dein Google-Unternehmensprofil - wir zeigen dir sofort, welche Bewertungen wir vernichten können",
+                steps: `
+                    <div class="progress-counter">Schritt 1 von 3</div>
+                    <div class="step-progress">
+                        <div class="step-current">
+                            <div class="step-number">1</div>
+                            <span>Dein Unternehmen wählen</span>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                title: "📋 Wähle die negativen Bewertungen aus, die weg müssen",
+                subtitle: "Markiere alle negativen Bewertungen, die deinem Geschäft schaden - wir kümmern uns um den Rest",
+                steps: `
+                    <div class="progress-counter">Schritt 2 von 3</div>
+                    <div class="step-progress">
+                        <div class="step-completed">
+                            <div class="checkmark">✓</div>
+                            <span>Unternehmen gewählt</span>
+                        </div>
+                        <div class="step-current">
+                            <div class="step-number">2</div>
+                            <span>Bewertungen markieren</span>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "📞 Fast geschafft - deine Kontaktdaten",
+                subtitle: "Wir benötigen deine Daten für die kostenlose Prüfung und Rückmeldung binnen 24h",
+                steps: `
+                    <div class="progress-counter">Schritt 3 von 3</div>
+                    <div class="step-progress">
+                        <div class="step-completed">
+                            <div class="checkmark">✓</div>
+                            <span>Unternehmen gewählt</span>
+                        </div>
+                        <div class="step-completed">
+                            <div class="checkmark">✓</div>
+                            <span>Bewertungen markiert</span>
+                        </div>
+                        <div class="step-current">
+                            <div class="step-number">3</div>
+                            <span>Vernichtung starten</span>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Update Progressive Steps
+        function updateProgressiveSteps(step) {
+            if (step < 1 || step > 3) return;
+            
+            currentProgressStep = step;
+            const data = stepData[step];
+            
+            // Update UI
+            document.getElementById('progressiveSteps').innerHTML = data.steps;
+            document.getElementById('sectionTitle').innerHTML = data.title;
+            document.getElementById('sectionSubtitle').innerHTML = data.subtitle;
+        }
 
         // Initialize Google Places API
         function initializeGooglePlaces() {
@@ -1551,8 +1676,8 @@
                 search_string: prediction.description
             });
 
-            // Update UI
-            document.getElementById('step2').classList.add('active');
+            // Update to Step 2
+            updateProgressiveSteps(2);
             
             // Load reviews
             loadReviews();
@@ -1714,10 +1839,16 @@
             const summary = document.getElementById('selection-summary');
             if (selectedCount > 0) {
                 summary.style.display = 'block';
-                document.getElementById('step3').classList.add('active');
+                // Update to Step 3 when reviews selected
+                if (currentProgressStep === 2) {
+                    updateProgressiveSteps(3);
+                }
             } else {
                 summary.style.display = 'none';
-                document.getElementById('step3').classList.remove('active');
+                // Back to Step 2 if no reviews selected
+                if (currentProgressStep === 3 && selectedBusiness) {
+                    updateProgressiveSteps(2);
+                }
             }
 
             // Kontaktformular Logic
