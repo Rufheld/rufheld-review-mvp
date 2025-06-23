@@ -307,7 +307,7 @@
         }
         
         .content-section {
-            padding: 40px;
+            padding: 50px 40px;
         }
 
         .progressive-steps {
@@ -444,7 +444,7 @@
             border: 1px solid #e9ecef;
             border-radius: 15px;
             margin-top: 5px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
             z-index: 1000;
             display: none;
@@ -452,7 +452,7 @@
         }
         
         .autocomplete-item {
-            padding: 15px 20px;
+            padding: 18px 20px;
             cursor: pointer;
             border-bottom: 1px solid #f8f9fa;
             transition: background-color 0.2s ease;
@@ -1026,7 +1026,7 @@
             }
             
             .content-section {
-                padding: 25px;
+                padding: 40px 25px;
             }
             
             .step-progress {
@@ -1143,7 +1143,7 @@
             <div class="hero-section">
                 <h1 class="hero-title">Negative Bewertungen zerstören dein Geschäft?</h1>
                 <p class="hero-subtitle">
-                    <strong class="success-rate">Wir sind Unternehmer wie du - und haben schon 17.500+ negative Bewertungen vernichtet. Kein Erfolg = Keine Zahlung!</strong>
+                    <strong class="success-rate">Wir sind Unternehmer wie du - und haben schon 17.500+ negative Bewertungen vernichtet. Kein Erfolg = Kein Cent!</strong>
                 </p>
                 <div class="hero-guarantee">
                     <div class="guarantee-item">
@@ -1638,7 +1638,8 @@
                     input: query,
                     types: ['establishment'],
                     location: new google.maps.LatLng(51.1657, 10.4515),
-                    radius: 1000000
+                    radius: 1000000,
+                    componentRestrictions: {country: ['de', 'at', 'ch']}
                 }, displayAutocomplete);
             }
         });
@@ -1647,14 +1648,28 @@
             const dropdown = document.getElementById('autocomplete-dropdown');
             dropdown.innerHTML = '';
 
-            if (status === google.maps.places.PlacesServiceStatus.OK && predictions) {
-                predictions.forEach(prediction => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && predictions && predictions.length > 0) {
+                // Zeige bis zu 8 Ergebnisse für bessere Auswahl
+                const maxResults = Math.min(predictions.length, 8);
+                
+                for (let i = 0; i < maxResults; i++) {
+                    const prediction = predictions[i];
                     const item = document.createElement('div');
                     item.className = 'autocomplete-item';
-                    item.textContent = prediction.description;
+                    
+                    // Verbesserte Darstellung mit Haupt- und Nebentitel
+                    const parts = prediction.description.split(',');
+                    const mainTitle = parts[0].trim();
+                    const subTitle = parts.slice(1).join(',').trim();
+                    
+                    item.innerHTML = `
+                        <div style="font-weight: 600; color: #2c3e50; margin-bottom: 2px;">${mainTitle}</div>
+                        ${subTitle ? `<div style="font-size: 0.9rem; color: #6c757d;">${subTitle}</div>` : ''}
+                    `;
+                    
                     item.onclick = () => selectBusiness(prediction);
                     dropdown.appendChild(item);
-                });
+                }
                 dropdown.style.display = 'block';
             } else {
                 hideAutocomplete();
