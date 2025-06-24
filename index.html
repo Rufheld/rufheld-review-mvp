@@ -302,7 +302,7 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            overflow: hidden;
+            overflow: visible;
             margin-bottom: 30px;
         }
         
@@ -416,6 +416,7 @@
         .search-container {
             position: relative;
             margin-bottom: 30px;
+            z-index: 100;
         }
         
         .search-input {
@@ -446,9 +447,9 @@
             margin-top: 5px;
             max-height: 400px;
             overflow-y: auto;
-            z-index: 1000;
+            z-index: 9999;
             display: none;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
         
         .autocomplete-item {
@@ -1128,6 +1129,12 @@
 
             .urgency-cta p {
                 font-size: 1.1rem;
+            }
+
+            /* Mobile Autocomplete Fix */
+            .autocomplete-dropdown {
+                max-height: 300px;
+                border-radius: 12px;
             }
         }
     </style>
