@@ -126,10 +126,19 @@ app.get('/api/reviews/:placeId', async (req, res) => {
 // Route: Submit selected reviews for processing
 app.post('/api/submit-order', async (req, res) => {
     try {
-        const { placeId, selectedReviews, businessInfo } = req.body;
+        // Change this line to match what frontend sends
+        const { 
+            businessPlaceId, 
+            selectedReviews, 
+            businessName,
+            customerName,
+            customerEmail,
+            customerPhone,
+            totalPrice 
+        } = req.body;
 
-        // Validation
-        if (!placeId || !selectedReviews || selectedReviews.length === 0) {
+        // Update validation to use correct field name
+        if (!businessPlaceId || !selectedReviews || selectedReviews.length === 0) {
             return res.status(400).json({
                 success: false,
                 error: 'Ungültige Anfrage. PlaceID und ausgewählte Bewertungen sind erforderlich.'
@@ -137,27 +146,24 @@ app.post('/api/submit-order', async (req, res) => {
         }
 
         // Calculate total price
-        const totalPrice = selectedReviews.length * 39.99;
-
-        // Here you would typically:
-        // 1. Save to database
-        // 2. Send to Zoho CRM via API
-        // 3. Send confirmation email
-        // 4. Create internal ticket
+        const calculatedPrice = selectedReviews.length * 39.99;
 
         console.log('Order submitted:', {
-            placeId,
+            businessPlaceId,
+            businessName,
+            customerName,
+            customerEmail,
+            customerPhone,
             selectedReviews: selectedReviews.length,
-            totalPrice,
-            businessInfo
+            totalPrice: calculatedPrice
         });
 
         // For MVP, just log and return success
         res.json({
             success: true,
             message: 'Anfrage erfolgreich eingereicht.',
-            orderId: `RH-${Date.now()}`, // Simple order ID for demo
-            totalPrice: totalPrice,
+            orderId: `RH-${Date.now()}`,
+            totalPrice: calculatedPrice,
             reviewCount: selectedReviews.length,
             estimatedProcessingTime: '24-48 Stunden'
         });
