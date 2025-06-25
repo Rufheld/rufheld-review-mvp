@@ -310,10 +310,12 @@ app.post('/api/submit-order', async (req, res) => {
             try {
                 // Customer confirmation email HTML (deine angepasste Version)
                 const customerEmailHtml = `
-                    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden;">
-                        <div style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white; padding: 30px 20px; text-align: center;">
-                            <h2 style="margin: 0 0 10px 0; font-size: 24px;">🏆 Ihr Auftrag bei Rufheld wurde eingereicht!</h2>
-                        </div>
+                    <div style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white; padding: 30px 20px; text-align: center;">
+                        <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" 
+                             alt="Rufheld Logo" 
+                             style="max-width: 180px; height: auto; margin-bottom: 15px; filter: brightness(0) invert(1);">
+                        <h2 style="margin: 0 0 10px 0; font-size: 24px;">🏆 Ihr Auftrag wurde eingereicht!</h2>
+                    </div>
                         
                         <div style="padding: 30px 20px;">
                             <p>Liebe/r <strong>${customerName}</strong>,</p>
@@ -427,10 +429,10 @@ app.post('/api/submit-order', async (req, res) => {
 
                 // Send customer confirmation email
                 await emailTransporter.sendMail({
-                    from: '"Rufheld - Review Vernichtung" <info@rufheld.de>',
+                    from: '"Rufheld" <info@rufheld.de>',
                     replyTo: 'info@rufheld.de',
                     to: customerEmail,
-                    subject: `✅ Auftrag ${orderId} erhalten - Rufheld vernichtet Ihre negativen Reviews`,
+                    subject: `✅ Auftrag ${orderId} erhalten - Rufheld vernichtet Ihre negativen Bewertungen`,
                     html: customerEmailHtml,
                     headers: {
                         'X-Priority': '1',
@@ -443,7 +445,7 @@ app.post('/api/submit-order', async (req, res) => {
                 // Send admin notification email
                 if (process.env.NOTIFICATION_EMAIL) {
                     await emailTransporter.sendMail({
-                        from: '"Rufheld System Alert" <info@rufheld.de>',
+                        from: '"Rufheld Backend" <info@rufheld.de>',
                         replyTo: 'info@rufheld.de',
                         to: process.env.NOTIFICATION_EMAIL,
                         subject: `🚨 NEUER AUFTRAG: ${customerName} - ${selectedReviews.length} Reviews (€${calculatedPrice.toFixed(2)})`,
