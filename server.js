@@ -134,8 +134,8 @@ app.get('/api/test-email', async (req, res) => {
     
     try {
         await emailTransporter.sendMail({
-            from: '"Rufheld Test" <info@rufheld.de>',
-            to: 'info@rufheld.de', // An dich selbst
+            from: '"Rufheld" <info@rufheld.de>',
+            to: 'business@rufheld.de', // An dich selbst
             subject: 'Zoho Mail Test - Railway Backend',
             html: `
                 <h2>🧪 Zoho Mail Test erfolgreich!</h2>
