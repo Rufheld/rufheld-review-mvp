@@ -38,7 +38,7 @@ if (process.env.DATABASE_URL) {
 // Email transporter setup - Zoho Mail optimiert
 let emailTransporter = null;
 if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-    emailTransporter = nodemailer.createTransporter({
+    emailTransporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST || 'smtppro.zoho.eu',
         port: parseInt(process.env.EMAIL_PORT) || 465,
         secure: process.env.EMAIL_SECURE === 'true' || process.env.EMAIL_PORT === '465',
