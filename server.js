@@ -545,6 +545,142 @@ app.get('/api/business/:placeId', async (req, res) => {
     }
 });
 
+// Route: Admin panel mit detaillierten Review-Daten
+app.get('/api/admin/orders-detailed', async (req, res) => {
+    if (!pool) {
+        return res.status(503).json({
+            success: false,
+            error: 'Database not available'
+        });
+    }
+
+    try {
+        const result = await pool.query('SELECT * FROM orders ORDER BY created_at DESC LIMIT 100');
+        
+        // Format die Daten schön lesbar
+        const detailedOrders = result.rows.map(order => {
+            const selectedReviews = JSON.parse(order.selected_reviews);
+            
+            return {
+                auftragsDetails: {
+                    id: order.id,
+                    auftragId: order.order_id,
+                    unternehmen: order.business_name,
+                    placeId: order.business_place_id,
+                    gesamtpreis: `€${order.total_price}`,
+                    anzahlReviews: order.review_count,
+                    status: order.status,
+                    bestelldatum: new Date(order.created_at).toLocaleString('de-DE')
+                },
+                kundenDetails: {
+                    name: order.customer_name,
+                    email: order.customer_email,
+                    telefon: order.customer_phone
+                },
+                reviewDetails: selectedReviews.map((review, index) => ({
+                    nummer: index + 1,
+                    reviewId: review.id || 'Keine ID',
+                    bewertung: `${review.rating} ${review.rating === 1 ? 'Stern' : 'Sterne'}`,
+                    bewerterName: review.reviewer || review.reviewerName || 'Unbekannt',
+                    reviewText: review.text || review.reviewText || 'Kein Text',
+                    reviewUrl: review.url || 'Keine URL',
+                    reviewerId: review.reviewer_id || 'Keine ID',
+                    datum: review.datetime || 'Unbekannt',
+                    likes: review.likes || 0
+                }))
+            };
+        });
+
+        res.json({
+            success: true,
+            orders: detailedOrders,
+            total: detailedOrders.length,
+            hinweis: 'Alle Review-Details sind hier vollständig sichtbar'
+        });
+
+    } catch (error) {
+        console.error('Error fetching detailed orders:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Fehler beim Laden der detaillierten Bestellungen.'
+        });
+    }
+});
+
+// Route: Einzelne Bestellung mit allen Details
+app.get('/api/admin/order/:orderId', async (req, res) => {
+    if (!pool) {
+        return res.status(503).json({
+            success: false,
+            error: 'Database not available'
+        });
+    }
+
+    try {
+        const { orderId } = req.params;
+        const result = await pool.query('SELECT * FROM orders WHERE order_id = $1', [orderId]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({
+                success: false,
+                error: 'Bestellung nicht gefunden'
+            });
+        }
+
+        const order = result.rows[0];
+        const selectedReviews = JSON.parse(order.selected_reviews);
+        
+        res.json({
+            success: true,
+            auftrag: {
+                id: order.id,
+                auftragId: order.order_id,
+                unternehmen: order.business_name,
+                placeId: order.business_place_id,
+                kunde: {
+                    name: order.customer_name,
+                    email: order.customer_email,
+                    telefon: order.customer_phone
+                },
+                preis: {
+                    gesamt: `€${order.total_price}`,
+                    proReview: '€39.99',
+                    anzahl: order.review_count
+                },
+                status: order.status,
+                erstellt: new Date(order.created_at).toLocaleString('de-DE'),
+                aktualisiert: new Date(order.updated_at).toLocaleString('de-DE')
+            },
+            reviews: selectedReviews.map((review, index) => ({
+                nummer: index + 1,
+                details: {
+                    id: review.id || 'Keine ID',
+                    url: review.url || 'Keine URL',
+                    bewertung: review.rating,
+                    sterne: `${review.rating} ${review.rating === 1 ? 'Stern' : 'Sterne'}`,
+                    datum: review.datetime || 'Unbekannt'
+                },
+                bewerter: {
+                    name: review.reviewer || review.reviewerName || 'Unbekannt',
+                    id: review.reviewer_id || 'Keine ID'
+                },
+                inhalt: {
+                    text: review.text || review.reviewText || 'Kein Text',
+                    likes: review.likes || 0,
+                    länge: (review.text || review.reviewText || '').length
+                }
+            }))
+        });
+
+    } catch (error) {
+        console.error('Error fetching order details:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Fehler beim Laden der Bestellungsdetails.'
+        });
+    }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
     console.error('Unhandled error:', error);
