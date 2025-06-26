@@ -86,19 +86,28 @@
         }
 
         .logo-container {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 2;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 2;
         }
-
+    
+        .logo-circle-bg {
+        background: white;
+        border-radius: 50%;
+        padding: 25px;
+        width: 120px;
+        height: 120px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    
         .logo-image {
-            height: 70px;
-            width: auto;
-            max-width: 350px;
-            object-fit: contain;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        width: 70px;
+        height: auto;
         }
 
         @keyframes rotate {
@@ -557,7 +566,9 @@
         <!-- Header Section -->
         <div class="header-section">
             <div class="logo-container">
+                <div class="logo-circle-bg">
                 <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" alt="Rufheld Logo" class="logo-image">
+                </div>
             </div>
             <div class="success-icon">🏆</div>
             <h1 class="main-title">Mission erfolgreich!</h1>
