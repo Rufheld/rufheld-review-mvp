@@ -783,28 +783,33 @@
         }
         
         .order-btn {
-            padding: 15px 30px;
-            background: #1AAA8E;
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        padding: 15px 30px;
+        background: white;
+        color: #00277C;
+        border: 3px solid #1DC3A3;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
-        
+    
         .order-btn:hover {
-            background: #1DC3A3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(26, 170, 142, 0.4);
+        background: white;  /* Bleibt weiß - nie untertauchen! */
+        color: #00277C;
+        border-color: #00277C;
+        transform: scale(1.05) translateY(-2px);  /* Wird größer + hebt sich */
+        box-shadow: 0 15px 35px rgba(0, 39, 124, 0.3);  /* Starker Shadow */
         }
-
+    
         .order-btn:disabled {
-            background-color: #9ca3af !important;
-            cursor: not-allowed !important;
-            opacity: 0.5 !important;
-            transform: none !important;
+        background-color: #f3f4f6 !important;
+        color: #9ca3af !important;
+        border-color: #d1d5db !important;
+        cursor: not-allowed !important;
+        opacity: 0.5 !important;
+        transform: none !important;
         }
         
         .loading {
