@@ -310,10 +310,15 @@ app.post('/api/submit-order', async (req, res) => {
             try {
                 // Customer confirmation email HTML (deine angepasste Version)
                 const customerEmailHtml = `
-                    <div style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white; padding: 30px 20px; text-align: center;">
-                        <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" 
+                    <!-- Logo-Bereich mit weißem Hintergrund -->
+                    <div style="background: white; padding: 30px 20px; text-align: center; border-bottom: 1px solid #e9ecef;">
+                        <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/682448c7f93ce636595a9424_66eac46dad1e9ecc1d56792b_55918_RufHeld_RB-03-FINAL-p-1080.png.png" 
                              alt="Rufheld Logo" 
-                             style="max-width: 180px; height: auto; margin-bottom: 15px; filter: brightness(0) invert(1);">
+                             style="max-width: 200px; height: auto;">
+                    </div>
+                    
+                    <!-- Header-Bereich mit Gradient (ohne Logo) -->
+                    <div style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white; padding: 30px 20px; text-align: center;">
                         <h2 style="margin: 0 0 10px 0; font-size: 24px;">🏆 Ihr Auftrag wurde eingereicht!</h2>
                     </div>
                         
