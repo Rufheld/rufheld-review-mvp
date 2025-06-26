@@ -1720,7 +1720,11 @@
                     allReviews = [...allReviews, ...data.reviews];
                     hasMoreReviews = data.hasMore;
                     displayReviews();
-                    
+
+                    // ✅ Speichere die Place Details
+                    if (data.placeDetails) {
+                        selectedBusiness.placeDetails = data.placeDetails;
+                    }
                     // Track reviews loaded
                     trackEvent('ViewContent', {
                         content_type: 'reviews',
@@ -1972,11 +1976,14 @@
                 selectedReviews: Array.from(selectedReviews).map(reviewId => {
                     const review = allReviews.find(r => r.id === reviewId);
                     return {
-                        reviewId: reviewId,
-                        reviewerName: review?.reviewer || '',
-                        reviewText: review?.text || '',
+                        id: review?.id || reviewId,
+                        reviewer: review?.reviewer || 'Unbekannt',
+                        text: review?.text || '',
                         rating: review?.rating || 0,
-                        date: review?.datetime || ''
+                        datetime: review?.datetime || '',
+                        url: review?.url || '',
+                        reviewer_id: review?.reviewer_id || '',
+                        google_business_location: selectedBusiness?.placeDetails?.name || selectedBusiness?.description?.split(',')[0] || 'Unbekannt'  // ✅ Nur der Name
                     };
                 }),
                 totalPrice: document.getElementById('total-price')?.textContent || '€0,00',
