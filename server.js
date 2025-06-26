@@ -561,7 +561,8 @@ app.get('/api/admin/orders-detailed', async (req, res) => {
         
         // Format die Daten schön lesbar
         const detailedOrders = result.rows.map(order => {
-            const selectedReviews = JSON.parse(order.selected_reviews);
+            // selected_reviews ist bereits ein Object, kein String!
+            const selectedReviews = order.selected_reviews;
             
             return {
                 auftragsDetails: {
@@ -684,7 +685,7 @@ app.get('/api/admin/order/:orderId', async (req, res) => {
 });
 
 
-// DEBUGGING: Zeige raw selected_reviews Daten
+// DEBUGGING: Zeige raw selected_reviews Daten (korrigiert)
 app.get('/api/debug/orders-raw', async (req, res) => {
     try {
         const result = await pool.query('SELECT id, order_id, selected_reviews FROM orders ORDER BY created_at DESC LIMIT 5');
@@ -696,7 +697,9 @@ app.get('/api/debug/orders-raw', async (req, res) => {
                 order_id: row.order_id,
                 selected_reviews_type: typeof row.selected_reviews,
                 selected_reviews_raw: row.selected_reviews,
-                first_100_chars: row.selected_reviews ? row.selected_reviews.substring(0, 100) : 'NULL'
+                is_string: typeof row.selected_reviews === 'string',
+                is_object: typeof row.selected_reviews === 'object',
+                preview: row.selected_reviews ? JSON.stringify(row.selected_reviews).substring(0, 200) : 'NULL'
             }))
         });
     } catch (error) {
