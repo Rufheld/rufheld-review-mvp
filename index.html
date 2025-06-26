@@ -503,9 +503,16 @@
             transition: all 0.2s ease;
         }
         
-        .bulk-btn:hover {
+        .bulk-btn:hover:not(:disabled) {
             background: #f8f9fa;
             border-color: #00277C;
+        }
+        
+        .bulk-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #f8f9fa;
+            color: #6c757d;
         }
         
         .review-card {
@@ -1281,7 +1288,8 @@
                         <div id="reviews-count" class="reviews-count"></div>
                         <div class="bulk-actions">
                             <button class="bulk-btn" onclick="selectByRating(1)">Alle 1-Sterne</button>
-                            <button class="bulk-btn" onclick="selectByRating(2)">Alle 2-Sterne</button>
+                            <button class="bulk-btn" onclick="selectByRatingRange([1,2])">Alle 1-2 Sterne</button>
+                            <button class="bulk-btn" onclick="selectByRatingRange([1,2,3])">Alle 1-3 Sterne</button>
                             <button class="bulk-btn" onclick="clearSelection()">Auswahl aufheben</button>
                         </div>
                     </div>
@@ -1542,9 +1550,11 @@
         let selectedPlaceId = null;
         let selectedBusiness = null;
         let allReviews = [];
+        let filteredReviews = []; // Only 1-3 star reviews for display
         let selectedReviews = new Set();
         let currentOffset = 0;
         let hasMoreReviews = true;
+        let totalReviewsCount = 0; // Total reviews from Google Places API
         let autocompleteService = null;
         let placesService = null;
         let currentProgressStep = 1;
@@ -1699,6 +1709,14 @@
             document.getElementById('business-search').value = prediction.description;
             hideAutocomplete();
             
+            // Reset all review-related data
+            allReviews = [];
+            filteredReviews = [];
+            selectedReviews.clear();
+            currentOffset = 0;
+            hasMoreReviews = true;
+            totalReviewsCount = 0;
+            
             // Track business selection
             trackEvent('Search', {
                 search_string: prediction.description
@@ -1714,22 +1732,52 @@
         async function loadReviews() {
             if (!selectedPlaceId) return;
 
+            // Save scroll position before loading (for load more functionality)
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            const scrollAnchor = loadMoreBtn ? loadMoreBtn.offsetTop : null;
+
             document.getElementById('loading').style.display = 'block';
             document.getElementById('reviews-section').style.display = 'none';
 
             try {
+                // Get total reviews count if this is the first load
+                if (currentOffset === 0 && placesService) {
+                    await getTotalReviewsCount();
+                }
+
                 const response = await fetch(`${API_BASE_URL}/api/reviews/${selectedPlaceId}?offset=${currentOffset}`);
                 const data = await response.json();
 
                 if (data.success) {
                     allReviews = [...allReviews, ...data.reviews];
+                    
+                    // Filter out 4 and 5 star reviews
+                    filteredReviews = allReviews.filter(review => parseInt(review.rating) <= 3);
+                    
                     hasMoreReviews = data.hasMore;
+                    
+                    // Use total count from Wextractor if available, otherwise fallback to Google Places API
+                    if (data.totalCount && currentOffset === 0) {
+                        totalReviewsCount = data.totalCount;
+                    }
+                    
                     displayReviews();
 
                     // ✅ Speichere die Place Details
                     if (data.placeDetails) {
                         selectedBusiness.placeDetails = data.placeDetails;
                     }
+
+                    // Restore scroll position for load more
+                    if (scrollAnchor && currentOffset > 0) {
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: scrollAnchor,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    }
+
                     // Track reviews loaded
                     trackEvent('ViewContent', {
                         content_type: 'reviews',
@@ -1746,6 +1794,26 @@
             document.getElementById('loading').style.display = 'none';
         }
 
+        // Get total reviews count from Google Places API
+        async function getTotalReviewsCount() {
+            return new Promise((resolve) => {
+                if (!placesService || !selectedPlaceId) {
+                    resolve();
+                    return;
+                }
+
+                placesService.getDetails({
+                    placeId: selectedPlaceId,
+                    fields: ['user_ratings_total']
+                }, (place, status) => {
+                    if (status === google.maps.places.PlacesServiceStatus.OK && place) {
+                        totalReviewsCount = place.user_ratings_total || 0;
+                    }
+                    resolve();
+                });
+            });
+        }
+
         function displayReviews() {
             const container = document.getElementById('reviews-container');
             const reviewsSection = document.getElementById('reviews-section');
@@ -1755,16 +1823,21 @@
                 container.innerHTML = '';
             }
 
-            allReviews.slice(currentOffset).forEach(review => {
+            // Only display filtered reviews (1-3 stars)
+            const newFilteredReviews = allReviews.slice(currentOffset).filter(review => parseInt(review.rating) <= 3);
+            
+            newFilteredReviews.forEach(review => {
                 const reviewCard = createReviewCard(review);
                 container.appendChild(reviewCard);
             });
 
-            // Update reviews count
-            document.getElementById('reviews-count').textContent = 
-                `${allReviews.length} Bewertungen gefunden`;
+            // Update reviews count with total from Google Places API
+            const totalText = totalReviewsCount > 0 ? 
+                `${totalReviewsCount} Bewertungen gefunden` : 
+                `${filteredReviews.length} Bewertungen gefunden`;
+            document.getElementById('reviews-count').textContent = totalText;
 
-            // Show/hide load more button
+            // Show/hide load more button based on filtered reviews
             const loadMoreBtn = document.getElementById('load-more-btn');
             if (hasMoreReviews) {
                 loadMoreBtn.style.display = 'block';
@@ -1825,26 +1898,156 @@
             updateSelection();
         }
 
-        function selectByRating(rating) {
-            allReviews.forEach(review => {
-                if (parseInt(review.rating) === rating) {
-                    selectedReviews.add(review.id);
-                    const card = document.querySelector(`[data-review-id="${review.id}"]`);
-                    if (card) {
-                        card.classList.add('selected');
-                        card.querySelector('.review-checkbox').checked = true;
-                    }
-                }
-            });
-
-            updateSelection();
+        async function selectByRating(rating) {
+            const button = event.target;
+            const originalText = button.textContent;
             
-            // Track bulk selection
-            trackEvent('AddToCart', {
-                content_type: 'reviews',
-                value: selectedReviews.size * PRICE_PER_REVIEW,
-                currency: 'EUR'
-            });
+            // Set button to loading state
+            button.disabled = true;
+            button.textContent = 'Lädt alle Reviews...';
+            
+            try {
+                // Load all reviews for the specified rating
+                await loadAllReviewsForRatings([rating]);
+                
+                // Now select all reviews with the specified rating
+                allReviews.forEach(review => {
+                    const reviewRating = parseInt(review.rating);
+                    if (reviewRating === rating && reviewRating <= 3) {
+                        selectedReviews.add(review.id);
+                        const card = document.querySelector(`[data-review-id="${review.id}"]`);
+                        if (card) {
+                            card.classList.add('selected');
+                            card.querySelector('.review-checkbox').checked = true;
+                        }
+                    }
+                });
+
+                updateSelection();
+                
+                // Track bulk selection
+                trackEvent('AddToCart', {
+                    content_type: 'reviews',
+                    value: selectedReviews.size * PRICE_PER_REVIEW,
+                    currency: 'EUR'
+                });
+                
+            } catch (error) {
+                console.error('Error loading reviews for rating:', error);
+                alert('Fehler beim Laden aller Bewertungen. Bitte versuche es erneut.');
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        // New function for rating ranges with auto-loading
+        async function selectByRatingRange(ratings) {
+            const button = event.target;
+            const originalText = button.textContent;
+            
+            // Set button to loading state
+            button.disabled = true;
+            button.textContent = 'Lädt alle Reviews...';
+            
+            try {
+                // Load all reviews for the specified ratings
+                await loadAllReviewsForRatings(ratings);
+                
+                // Now select all reviews with the specified ratings
+                allReviews.forEach(review => {
+                    const reviewRating = parseInt(review.rating);
+                    if (ratings.includes(reviewRating) && reviewRating <= 3) {
+                        selectedReviews.add(review.id);
+                        const card = document.querySelector(`[data-review-id="${review.id}"]`);
+                        if (card) {
+                            card.classList.add('selected');
+                            card.querySelector('.review-checkbox').checked = true;
+                        }
+                    }
+                });
+
+                updateSelection();
+                
+                // Track bulk selection
+                trackEvent('AddToCart', {
+                    content_type: 'reviews',
+                    value: selectedReviews.size * PRICE_PER_REVIEW,
+                    currency: 'EUR'
+                });
+                
+            } catch (error) {
+                console.error('Error loading reviews for rating range:', error);
+                alert('Fehler beim Laden aller Bewertungen. Bitte versuche es erneut.');
+            } finally {
+                // Reset button
+                button.disabled = false;
+                button.textContent = originalText;
+            }
+        }
+
+        // Load all reviews until we have all reviews for specified ratings
+        async function loadAllReviewsForRatings(targetRatings) {
+            const maxIterations = 50; // Safety limit
+            let iterations = 0;
+            
+            while (hasMoreReviews && iterations < maxIterations) {
+                // Check if we have enough reviews of target ratings
+                const currentTargetReviews = allReviews.filter(review => 
+                    targetRatings.includes(parseInt(review.rating))
+                );
+                
+                // Load more reviews
+                const beforeCount = allReviews.length;
+                currentOffset = allReviews.length;
+                
+                const response = await fetch(`${API_BASE_URL}/api/reviews/${selectedPlaceId}?offset=${currentOffset}`);
+                const data = await response.json();
+                
+                if (data.success && data.reviews.length > 0) {
+                    allReviews = [...allReviews, ...data.reviews];
+                    hasMoreReviews = data.hasMore;
+                    
+                    // Update display with new reviews (only 1-3 stars)
+                    const newFilteredReviews = data.reviews.filter(review => parseInt(review.rating) <= 3);
+                    const container = document.getElementById('reviews-container');
+                    
+                    newFilteredReviews.forEach(review => {
+                        const reviewCard = createReviewCard(review);
+                        container.appendChild(reviewCard);
+                    });
+                    
+                    // Update filtered reviews array
+                    filteredReviews = allReviews.filter(review => parseInt(review.rating) <= 3);
+                    
+                    // Update count display
+                    const totalText = totalReviewsCount > 0 ? 
+                        `${totalReviewsCount} Bewertungen gefunden` : 
+                        `${filteredReviews.length} Bewertungen gefunden`;
+                    document.getElementById('reviews-count').textContent = totalText;
+                    
+                } else {
+                    // No more reviews available
+                    hasMoreReviews = false;
+                    break;
+                }
+                
+                iterations++;
+                
+                // If we didn't get new reviews, break to avoid infinite loop
+                if (allReviews.length === beforeCount) {
+                    break;
+                }
+            }
+            
+            // Update load more button visibility
+            const loadMoreBtn = document.getElementById('load-more-btn');
+            if (hasMoreReviews) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
         }
 
         function clearSelection() {
