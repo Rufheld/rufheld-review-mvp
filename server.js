@@ -683,6 +683,31 @@ app.get('/api/admin/order/:orderId', async (req, res) => {
     }
 });
 
+
+// DEBUGGING: Zeige raw selected_reviews Daten
+app.get('/api/debug/orders-raw', async (req, res) => {
+    try {
+        const result = await pool.query('SELECT id, order_id, selected_reviews FROM orders ORDER BY created_at DESC LIMIT 5');
+        
+        res.json({
+            success: true,
+            debug: result.rows.map(row => ({
+                id: row.id,
+                order_id: row.order_id,
+                selected_reviews_type: typeof row.selected_reviews,
+                selected_reviews_raw: row.selected_reviews,
+                first_100_chars: row.selected_reviews ? row.selected_reviews.substring(0, 100) : 'NULL'
+            }))
+        });
+    } catch (error) {
+        res.json({
+            success: false,
+            error: error.message,
+            stack: error.stack
+        });
+    }
+});
+
 // Error handling middleware
 app.use((error, req, res, next) => {
     console.error('Unhandled error:', error);
