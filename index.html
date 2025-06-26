@@ -1987,17 +1987,13 @@
             }
         }
 
-        // Load all reviews until we have all reviews for specified ratings
+        // Load reviews efficiently until we reach higher ratings than needed
         async function loadAllReviewsForRatings(targetRatings) {
             const maxIterations = 50; // Safety limit
             let iterations = 0;
+            const maxTargetRating = Math.max(...targetRatings); // Highest rating we want
             
             while (hasMoreReviews && iterations < maxIterations) {
-                // Check if we have enough reviews of target ratings
-                const currentTargetReviews = allReviews.filter(review => 
-                    targetRatings.includes(parseInt(review.rating))
-                );
-                
                 // Load more reviews
                 const beforeCount = allReviews.length;
                 currentOffset = allReviews.length;
@@ -2006,6 +2002,12 @@
                 const data = await response.json();
                 
                 if (data.success && data.reviews.length > 0) {
+                    // Check if any review in this batch is higher than our max target rating
+                    const hasHigherRatings = data.reviews.some(review => 
+                        parseInt(review.rating) > maxTargetRating
+                    );
+                    
+                    // Add all reviews to our collection
                     allReviews = [...allReviews, ...data.reviews];
                     hasMoreReviews = data.hasMore;
                     
@@ -2026,6 +2028,12 @@
                         `${totalReviewsCount} Bewertungen gefunden` : 
                         `${filteredReviews.length} Bewertungen gefunden`;
                     document.getElementById('reviews-count').textContent = totalText;
+                    
+                    // STOP LOADING if we found higher ratings than we need
+                    if (hasHigherRatings) {
+                        console.log(`Stopping load: Found ratings higher than ${maxTargetRating}`);
+                        break;
+                    }
                     
                 } else {
                     // No more reviews available
