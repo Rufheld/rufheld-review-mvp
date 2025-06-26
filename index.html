@@ -1925,6 +1925,11 @@
 
                 updateSelection();
                 
+                // Always scroll to summary after bulk selection
+                setTimeout(() => {
+                    scrollToSummary();
+                }, 300);
+                
                 // Track bulk selection
                 trackEvent('AddToCart', {
                     content_type: 'reviews',
@@ -1970,6 +1975,11 @@
 
                 updateSelection();
                 
+                // Always scroll to summary after bulk selection
+                setTimeout(() => {
+                    scrollToSummary();
+                }, 300);
+                
                 // Track bulk selection
                 trackEvent('AddToCart', {
                     content_type: 'reviews',
@@ -1984,6 +1994,22 @@
                 // Reset button
                 button.disabled = false;
                 button.textContent = originalText;
+            }
+        }
+
+        // Helper function to scroll to summary/contact form
+        function scrollToSummary() {
+            const summarySection = document.getElementById('selection-summary');
+            const contactSection = document.getElementById('contact-form-section');
+            
+            // Scroll to contact form if visible, otherwise to summary
+            const targetElement = contactSection.style.display !== 'none' ? contactSection : summarySection;
+            
+            if (targetElement && targetElement.style.display !== 'none') {
+                targetElement.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
             }
         }
 
