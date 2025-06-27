@@ -1907,8 +1907,20 @@
             button.textContent = 'Lädt alle Reviews...';
             
             try {
+                // Clear previous selection first
+                clearSelection();
+                
                 // Load all reviews for the specified rating
                 await loadAllReviewsForRatings([rating]);
+                
+                // Ensure ALL cards are unchecked first, then select only the desired ones
+                document.querySelectorAll('.review-card').forEach(card => {
+                    card.classList.remove('selected');
+                    const checkbox = card.querySelector('.review-checkbox');
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                });
                 
                 // Now select all reviews with the specified rating
                 allReviews.forEach(review => {
@@ -1957,8 +1969,20 @@
             button.textContent = 'Lädt alle Reviews...';
             
             try {
+                // Clear previous selection first
+                clearSelection();
+                
                 // Load all reviews for the specified ratings
                 await loadAllReviewsForRatings(ratings);
+                
+                // Ensure ALL cards are unchecked first, then select only the desired ones
+                document.querySelectorAll('.review-card').forEach(card => {
+                    card.classList.remove('selected');
+                    const checkbox = card.querySelector('.review-checkbox');
+                    if (checkbox) {
+                        checkbox.checked = false;
+                    }
+                });
                 
                 // Now select all reviews with the specified ratings
                 allReviews.forEach(review => {
@@ -2086,10 +2110,16 @@
 
         function clearSelection() {
             selectedReviews.clear();
+            
+            // Clear all visual indicators for ALL displayed review cards
             document.querySelectorAll('.review-card').forEach(card => {
                 card.classList.remove('selected');
-                card.querySelector('.review-checkbox').checked = false;
+                const checkbox = card.querySelector('.review-checkbox');
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
             });
+            
             updateSelection();
         }
 
