@@ -734,6 +734,44 @@
             backdrop-filter: blur(10px);
         }
 
+        .contact-cta {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .contact-cta .order-btn {
+            padding: 18px 40px;
+            background: white;
+            color: #00277C;
+            border: 3px solid #1DC3A3;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .contact-cta .order-btn:hover:not(:disabled) {
+            background: white;
+            color: #00277C;
+            border-color: #00277C;
+            transform: scale(1.02) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 39, 124, 0.3);
+        }
+
+        .contact-cta .order-btn:disabled {
+            background-color: #f3f4f6 !important;
+            color: #9ca3af !important;
+            border-color: #d1d5db !important;
+            cursor: not-allowed !important;
+            opacity: 0.5 !important;
+            transform: none !important;
+        }
+
         /* Animation beim Erscheinen */
         .contact-form-section.show {
             display: block;
@@ -758,18 +796,16 @@
             border-radius: 15px;
             margin-top: 30px;
             display: none;
+            text-align: center;
         }
         
         .summary-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            max-width: 400px;
+            margin: 0 auto;
         }
         
         .summary-text {
-            flex: 1;
+            margin-bottom: 0;
         }
         
         .selected-count {
@@ -787,36 +823,6 @@
         .price-note {
             font-size: 14px;
             opacity: 0.9;
-        }
-        
-        .order-btn {
-        padding: 15px 30px;
-        background: white;
-        color: #00277C;
-        border: 3px solid #1DC3A3;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-    
-        .order-btn:hover {
-        background: white;  /* Bleibt weiß - nie untertauchen! */
-        color: #00277C;
-        border-color: #00277C;
-        transform: scale(1.05) translateY(-2px);  /* Wird größer + hebt sich */
-        box-shadow: 0 15px 35px rgba(0, 39, 124, 0.3);  /* Starker Shadow */
-        }
-    
-        .order-btn:disabled {
-        background-color: #f3f4f6 !important;
-        color: #9ca3af !important;
-        border-color: #d1d5db !important;
-        cursor: not-allowed !important;
-        opacity: 0.5 !important;
-        transform: none !important;
         }
         
         .loading {
@@ -1071,6 +1077,15 @@
                 margin: 20px 0;
             }
 
+            .contact-cta .order-btn {
+                font-size: 16px;
+                padding: 16px 32px;
+            }
+
+            .summary-content {
+                text-align: center;
+            }
+
             .hero-title {
                 font-size: 1.8rem;
             }
@@ -1299,6 +1314,16 @@
                     </button>
                 </div>
 
+                <div id="selection-summary" class="selection-summary">
+                    <div class="summary-content">
+                        <div class="summary-text">
+                            <div class="selected-count" id="selected-count">0 Bewertungen ausgewählt</div>
+                            <div class="total-price" id="total-price">€0,00</div>
+                            <div class="price-note">Zahlung nur bei erfolgreichem Ergebnis</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Schickes Kontaktformular -->
                 <div id="contact-form-section" class="contact-form-section">
                     <h3>Deine Kontaktdaten</h3>
@@ -1319,15 +1344,9 @@
                             🔒 Deine Daten werden vertraulich behandelt und nur für diese Anfrage verwendet.
                         </div>
                     </form>
-                </div>
-
-                <div id="selection-summary" class="selection-summary">
-                    <div class="summary-content">
-                        <div class="summary-text">
-                            <div class="selected-count" id="selected-count">0 Bewertungen ausgewählt</div>
-                            <div class="total-price" id="total-price">€0,00</div>
-                            <div class="price-note">Zahlung nur bei erfolgreichem Ergebnis</div>
-                        </div>
+                    
+                    <!-- CTA Button hier im Kontaktformular -->
+                    <div class="contact-cta">
                         <button class="order-btn" onclick="submitOrder()">
                             Meine Reviews jetzt bereinigen lassen
                         </button>
@@ -2172,7 +2191,9 @@
                 }, 50);
                 contactFormVisible = true;
                 
-                contactSection.scrollIntoView({ 
+                // Scroll to the warenkorb (selection-summary) instead of contact form
+                const summarySection = document.getElementById('selection-summary');
+                summarySection.scrollIntoView({ 
                     behavior: 'smooth',
                     block: 'center'
                 });
@@ -2265,7 +2286,7 @@
             console.log('Order Data:', orderData);
             
             // Button auf Loading setzen
-            const submitButton = document.querySelector('.order-btn');
+            const submitButton = document.querySelector('#contact-form-section .order-btn');
             const originalText = submitButton.textContent;
             submitButton.disabled = true;
             submitButton.textContent = 'Wird gesendet...';
