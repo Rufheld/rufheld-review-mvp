@@ -472,6 +472,75 @@
             display: none;
             margin-top: 40px;
         }
+
+        /* Pricing Tiers Styles */
+        .pricing-tiers {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #1DC3A3;
+        }
+
+        .pricing-title {
+            color: #00277C;
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .pricing-tier {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .pricing-tier.highlight {
+            border-color: #1DC3A3;
+            transform: scale(1.02);
+        }
+
+        .pricing-tier:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 39, 124, 0.15);
+        }
+
+        .tier-range {
+            font-weight: 600;
+            color: #00277C;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .tier-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1DC3A3;
+            margin-bottom: 5px;
+        }
+
+        .tier-label {
+            font-size: 0.85rem;
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .pricing-tier:first-child .tier-label {
+            color: #6c757d;
+        }
         
         .reviews-header {
             display: flex;
@@ -807,6 +876,47 @@
         .summary-text {
             margin-bottom: 0;
         }
+
+        .price-breakdown {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+
+        .savings-display {
+            background: rgba(255,255,255,0.15);
+            padding: 10px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .savings-display.highlight {
+            background: rgba(40, 167, 69, 0.3);
+            border: 1px solid rgba(40, 167, 69, 0.5);
+        }
+
+        .tier-incentive {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.95rem;
+            border: 1px dashed rgba(255,255,255,0.3);
+        }
+
+        .tier-incentive.active {
+            background: linear-gradient(135deg, rgba(255,193,7,0.2), rgba(255,235,59,0.2));
+            border-color: #ffc107;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
         
         .selected-count {
             font-size: 1.3rem;
@@ -1082,8 +1192,30 @@
                 padding: 16px 32px;
             }
 
-            .summary-content {
-                text-align: center;
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .pricing-tier {
+                padding: 15px 10px;
+            }
+
+            .tier-price {
+                font-size: 1.3rem;
+            }
+
+            .pricing-title {
+                font-size: 1.2rem;
+            }
+
+            .tier-incentive {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+
+            .price-breakdown {
+                font-size: 0.85rem;
             }
 
             .hero-title {
@@ -1299,6 +1431,34 @@
 
                 <div id="reviews-section" class="reviews-section">
                     <h2 class="section-title">Wähle die negativen Bewertungen aus, die weg müssen</h2>
+                    
+                    <!-- Pricing Tiers Display -->
+                    <div class="pricing-tiers">
+                        <h3 class="pricing-title">💰 Je mehr Reviews, desto günstiger wird es!</h3>
+                        <div class="pricing-grid">
+                            <div class="pricing-tier">
+                                <div class="tier-range">1-10 Reviews</div>
+                                <div class="tier-price">€39,99</div>
+                                <div class="tier-label">Standard</div>
+                            </div>
+                            <div class="pricing-tier highlight">
+                                <div class="tier-range">11-25 Reviews</div>
+                                <div class="tier-price">€19,99</div>
+                                <div class="tier-label">50% günstiger!</div>
+                            </div>
+                            <div class="pricing-tier highlight">
+                                <div class="tier-range">26-50 Reviews</div>
+                                <div class="tier-price">€12,99</div>
+                                <div class="tier-label">68% günstiger!</div>
+                            </div>
+                            <div class="pricing-tier highlight">
+                                <div class="tier-range">51+ Reviews</div>
+                                <div class="tier-price">€9,99</div>
+                                <div class="tier-label">75% günstiger!</div>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="reviews-header">
                         <div id="reviews-count" class="reviews-count"></div>
                         <div class="bulk-actions">
@@ -1319,9 +1479,12 @@
                         <div class="summary-text">
                             <div class="selected-count" id="selected-count">0 Bewertungen ausgewählt</div>
                             <div class="total-price" id="total-price">€0,00</div>
+                            <div class="price-breakdown" id="price-breakdown"></div>
+                            <div class="savings-display" id="savings-display"></div>
                             <div class="price-note">Zahlung nur bei erfolgreichem Ergebnis</div>
                         </div>
                     </div>
+                    <div class="tier-incentive" id="tier-incentive"></div>
                 </div>
 
                 <!-- Schickes Kontaktformular -->
@@ -1563,8 +1726,74 @@
     <script>
         // Configuration
         const API_BASE_URL = 'https://rufheld-review-mvp-production.up.railway.app';
-        const PRICE_PER_REVIEW = 39.99;
         
+        // Dynamic Pricing Tiers
+        const PRICING_TIERS = [
+            { min: 1, max: 10, price: 39.99, discount: 0, label: "Standard" },
+            { min: 11, max: 25, price: 19.99, discount: 50, label: "50% günstiger!" },
+            { min: 26, max: 50, price: 12.99, discount: 68, label: "68% günstiger!" },
+            { min: 51, max: Infinity, price: 9.99, discount: 75, label: "75% günstiger!" }
+        ];
+        
+        // Calculate tiered pricing
+        function calculateTieredPrice(reviewCount) {
+            let totalPrice = 0;
+            let breakdown = [];
+            let remainingReviews = reviewCount;
+            
+            for (const tier of PRICING_TIERS) {
+                if (remainingReviews <= 0) break;
+                
+                const reviewsInThisTier = Math.min(remainingReviews, tier.max - tier.min + 1);
+                if (reviewsInThisTier > 0) {
+                    const tierPrice = reviewsInThisTier * tier.price;
+                    totalPrice += tierPrice;
+                    
+                    breakdown.push({
+                        count: reviewsInThisTier,
+                        price: tier.price,
+                        total: tierPrice,
+                        label: tier.label,
+                        discount: tier.discount
+                    });
+                    
+                    remainingReviews -= reviewsInThisTier;
+                }
+            }
+            
+            // Calculate potential savings (vs all at standard price)
+            const standardPrice = reviewCount * PRICING_TIERS[0].price;
+            const savings = standardPrice - totalPrice;
+            
+            return {
+                totalPrice,
+                breakdown,
+                savings,
+                standardPrice
+            };
+        }
+
+        // Get next tier incentive
+        function getNextTierIncentive(currentCount) {
+            for (const tier of PRICING_TIERS) {
+                if (currentCount < tier.min) {
+                    const reviewsNeeded = tier.min - currentCount;
+                    const newPrice = tier.price;
+                    const currentTier = PRICING_TIERS.find(t => currentCount >= t.min && currentCount <= t.max);
+                    const currentPrice = currentTier ? currentTier.price : PRICING_TIERS[0].price;
+                    
+                    return {
+                        reviewsNeeded,
+                        newPrice,
+                        currentPrice,
+                        discount: tier.discount,
+                        label: tier.label
+                    };
+                }
+            }
+            return null;
+        }
+
         // Global state
         let selectedPlaceId = null;
         let selectedBusiness = null;
@@ -1961,11 +2190,13 @@
                     scrollToSummary();
                 }, 300);
                 
-                // Track bulk selection
+                // Track bulk selection with tiered pricing
+                const pricingData = calculateTieredPrice(selectedReviews.size);
                 trackEvent('AddToCart', {
                     content_type: 'reviews',
-                    value: selectedReviews.size * PRICE_PER_REVIEW,
-                    currency: 'EUR'
+                    value: pricingData.totalPrice,
+                    currency: 'EUR',
+                    num_items: selectedReviews.size
                 });
                 
             } catch (error) {
@@ -2023,11 +2254,13 @@
                     scrollToSummary();
                 }, 300);
                 
-                // Track bulk selection
+                // Track bulk selection with tiered pricing
+                const pricingData = calculateTieredPrice(selectedReviews.size);
                 trackEvent('AddToCart', {
                     content_type: 'reviews',
-                    value: selectedReviews.size * PRICE_PER_REVIEW,
-                    currency: 'EUR'
+                    value: pricingData.totalPrice,
+                    currency: 'EUR',
+                    num_items: selectedReviews.size
                 });
                 
             } catch (error) {
@@ -2142,16 +2375,55 @@
             updateSelection();
         }
 
-        // ZENTRALE FUNKTION - Updated alles
+        // ZENTRALE FUNKTION - Updated alles mit Dynamic Pricing
         function updateSelection() {
             const selectedCount = selectedReviews.size;
-            const totalPrice = selectedCount * PRICE_PER_REVIEW;
+            
+            // Calculate tiered pricing
+            const pricingData = calculateTieredPrice(selectedCount);
             
             // Update UI
             document.getElementById('selected-count').textContent = 
                 `${selectedCount} Bewertung${selectedCount !== 1 ? 'en' : ''} ausgewählt`;
             document.getElementById('total-price').textContent = 
-                `€${totalPrice.toFixed(2).replace('.', ',')}`;
+                `€${pricingData.totalPrice.toFixed(2).replace('.', ',')}`;
+
+            // Update price breakdown
+            const breakdownElement = document.getElementById('price-breakdown');
+            if (selectedCount > 0 && pricingData.breakdown.length > 0) {
+                const breakdownHTML = pricingData.breakdown.map(tier => 
+                    `${tier.count} × €${tier.price.toFixed(2)} = €${tier.total.toFixed(2)}`
+                ).join('<br>');
+                breakdownElement.innerHTML = breakdownHTML;
+                breakdownElement.style.display = 'block';
+            } else {
+                breakdownElement.style.display = 'none';
+            }
+
+            // Update savings display
+            const savingsElement = document.getElementById('savings-display');
+            if (pricingData.savings > 0) {
+                savingsElement.innerHTML = `💰 Du sparst €${pricingData.savings.toFixed(2)} gegenüber Einzelpreis!`;
+                savingsElement.className = 'savings-display highlight';
+                savingsElement.style.display = 'block';
+            } else {
+                savingsElement.style.display = 'none';
+            }
+
+            // Update tier incentive
+            const incentiveElement = document.getElementById('tier-incentive');
+            const nextTier = getNextTierIncentive(selectedCount);
+            if (nextTier && selectedCount > 0) {
+                const savings = (nextTier.currentPrice - nextTier.newPrice) * selectedCount;
+                incentiveElement.innerHTML = `
+                    🚀 Wähle ${nextTier.reviewsNeeded} weitere Review${nextTier.reviewsNeeded > 1 ? 's' : ''} und zahle nur €${nextTier.newPrice} pro Review!<br>
+                    <strong>${nextTier.label}</strong> - Das spart dir zusätzlich €${savings.toFixed(2)}!
+                `;
+                incentiveElement.className = 'tier-incentive active';
+                incentiveElement.style.display = 'block';
+            } else {
+                incentiveElement.style.display = 'none';
+            }
 
             // Show/hide summary section
             const summary = document.getElementById('selection-summary');
@@ -2259,7 +2531,8 @@
                 return false;
             }
             
-            // Sammle alle Order-Daten
+            // Sammle alle Order-Daten mit Dynamic Pricing
+            const finalPricingData = calculateTieredPrice(selectedReviews.size);
             const orderData = {
                 businessName: selectedBusiness?.description || 'Unbekannt',
                 businessPlaceId: selectedPlaceId,
@@ -2279,7 +2552,11 @@
                         google_business_location: selectedBusiness?.placeDetails?.name || selectedBusiness?.description?.split(',')[0] || 'Unbekannt'  // ✅ Nur der Name
                     };
                 }),
-                totalPrice: document.getElementById('total-price')?.textContent || '€0,00',
+                // Dynamic Pricing Information
+                totalPrice: `€${finalPricingData.totalPrice.toFixed(2)}`,
+                pricingBreakdown: finalPricingData.breakdown,
+                totalSavings: finalPricingData.savings,
+                standardPrice: finalPricingData.standardPrice,
                 timestamp: new Date().toISOString()
             };
             
@@ -2308,10 +2585,11 @@
             .then(data => {
                 console.log('Order submitted successfully:', data);
                 
-                // Track conversion
+                // Track conversion with tiered pricing
+                const finalPricingData = calculateTieredPrice(selectedReviews.size);
                 trackEvent('Purchase', {
                     content_type: 'reviews',
-                    value: selectedReviews.size * PRICE_PER_REVIEW,
+                    value: finalPricingData.totalPrice,
                     currency: 'EUR',
                     num_items: selectedReviews.size
                 });
