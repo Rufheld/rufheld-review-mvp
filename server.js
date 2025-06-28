@@ -264,10 +264,32 @@ app.post('/api/submit-order', async (req, res) => {
             });
         }
 
+        // Dynamic Pricing Function - Gleiche Logic wie Frontend
+        function calculateTieredPrice(reviewCount) {
+            const PRICING_TIERS = [
+                { min: 1, max: 10, price: 39.99 },
+                { min: 11, max: 25, price: 19.99 },
+                { min: 26, max: 50, price: 12.99 },
+                { min: 51, max: Infinity, price: 9.99 }
+            ];
+            
+            let totalPrice = 0;
+            let remainingReviews = reviewCount;
+            
+            for (const tier of PRICING_TIERS) {
+                if (remainingReviews <= 0) break;
+                const reviewsInThisTier = Math.min(remainingReviews, tier.max - tier.min + 1);
+                if (reviewsInThisTier > 0) {
+                    totalPrice += reviewsInThisTier * tier.price;
+                    remainingReviews -= reviewsInThisTier;
+                }
+            }
+            
+            return totalPrice;
+        }
         // Generate order ID
-        const orderId = `RH-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-        const calculatedPrice = selectedReviews.length * 39.99;
-
+        const orderId = `RH-${new Date().toISOString().slice(2,10).replace(/-/g,'')}`;
+        const calculatedPrice = calculateTieredPrice(selectedReviews.length);
         console.log('Order submitted:', {
             orderId,
             businessPlaceId,
