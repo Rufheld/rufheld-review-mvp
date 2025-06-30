@@ -41,10 +41,31 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #00277C 0%, #2F5AA6 40%, #1AAA8E 80%, #1DC3A3 100%);
-            min-height: 100vh;
-            color: #333;
-            line-height: 1.6;
+
+            /* 1) Basisfarbe, die NACH dem Verlauf benutzt wird                */
+            background:#1DC3A3;
+        
+            /* 2) Diagonaler Verlauf – Farbstopps näher zusammengezogen         */
+            background-image:linear-gradient(
+                135deg,
+                #00277C   0%,   /* tiefes Blau                                     */
+                #2F5AA6  15%,   /* helleres Blau kommt viel früher                 */
+                #1AAA8E  55%,   /* Türkis                                           */
+                #1DC3A3 100%    /* Mint                                            */
+            );
+        
+            /* 3) Verlauf nur genau 1 Viewport-Höhe hoch                         */
+            background-repeat:no-repeat;
+            background-position:center top;
+            background-size:100% 100vh;    /* Desktop & ältere Browser            */
+            min-height:100vh;
+            color:#333;
+            line-height:1.6;
+        }
+        
+        /* 4) Moderne Viewport-Einheiten – berücksichtigt Mobile-Browser-Toolbars */
+        @supports (height:100svh){
+            body{ background-size:100% 100svh; }
         }
         
         .container {
