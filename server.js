@@ -67,7 +67,10 @@ if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
     });
     
     console.log('✅ Zoho Mail transporter configured for Rufheld');
-} else {
+    console.log('📧 Admin notifications will be sent to:');
+    if (process.env.NOTIFICATION_EMAIL) console.log(`   - ${process.env.NOTIFICATION_EMAIL}`);
+    if (process.env.OPERATIONS_EMAIL) console.log(`   - ${process.env.OPERATIONS_EMAIL}`);
+    } else {
     console.log('⚠️  Email credentials not found - email features disabled');
 }
 
@@ -406,49 +409,49 @@ app.post('/api/submit-order', async (req, res) => {
                     </div>
                 `;
 
-                // Admin notification email HTML
+                // English Admin notification email HTML
                 const notificationEmailHtml = `
                     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.1); overflow: hidden;">
                         <div style="background: linear-gradient(135deg, #dc3545 0%, #ff6b7a 100%); color: white; padding: 25px 20px; text-align: center;">
-                            <h2 style="margin: 0; font-size: 28px;">🚨 NEUER AUFTRAG EINGEGANGEN!</h2>
+                            <h2 style="margin: 0; font-size: 28px;">🚨 NEW ORDER RECEIVED!</h2>
                         </div>
                         
                         <div style="padding: 30px 20px;">
                             <div style="background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 15px; margin: 0 0 25px 0; text-align: center; font-weight: 600; color: #856404; font-size: 18px;">
-                                ⏰ SOFORTIGE AUFMERKSAMKEIT ERFORDERLICH ⏰
+                                ⏰ IMMEDIATE ATTENTION REQUIRED ⏰
                             </div>
                             
-                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">👤 Kundendetails:</h3>
+                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">👤 Customer Details:</h3>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 15px; margin: 15px 0; border-left: 4px solid #1DC3A3;">
-                                <strong style="color: #00277C;">Auftrags-ID:</strong> ${orderId}<br>
+                                <strong style="color: #00277C;">Order ID:</strong> ${orderId}<br>
                                 <strong style="color: #00277C;">Name:</strong> ${customerName}<br>
                                 <strong style="color: #00277C;">Email:</strong> ${customerEmail}<br>
-                                <strong style="color: #00277C;">Telefon:</strong> ${customerPhone}<br>
-                                <strong style="color: #00277C;">Unternehmen:</strong> ${businessName}
+                                <strong style="color: #00277C;">Phone:</strong> ${customerPhone}<br>
+                                <strong style="color: #00277C;">Business:</strong> ${businessName}
                             </div>
                             
-                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">💼 Auftragsdetails:</h3>
+                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">💼 Order Details:</h3>
                             <div style="background: #f8f9fa; border-radius: 8px; padding: 15px; margin: 15px 0; border-left: 4px solid #1DC3A3;">
-                                <strong style="color: #00277C;">Anzahl Reviews:</strong> ${selectedReviews.length} negative Bewertungen<br>
+                                <strong style="color: #00277C;">Review Count:</strong> ${selectedReviews.length} negative reviews<br>
                                 <strong style="color: #00277C;">Google Place ID:</strong> ${businessPlaceId}
                             </div>
                             
                             <div style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white; padding: 15px; border-radius: 8px; text-align: center; font-size: 20px; font-weight: 700; margin: 20px 0;">
-                                💰 Gesamtwert: €${calculatedPrice.toFixed(2)}
+                                💰 Total Value: €${calculatedPrice.toFixed(2)}
                             </div>
                             
-                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">📝 Ausgewählte Reviews:</h3>
+                            <h3 style="color: #00277C; margin-bottom: 15px; font-size: 20px; border-bottom: 2px solid #1DC3A3; padding-bottom: 5px;">📝 Selected Reviews:</h3>
                             ${selectedReviews.map((review, index) => `
                                 <div style="background: #fff5f5; border: 1px solid #fecaca; border-radius: 8px; padding: 15px; margin: 10px 0; border-left: 4px solid #dc3545;">
-                                    <div style="font-weight: 600; color: #dc3545; margin-bottom: 8px;">⭐ ${review.rating} ${review.rating === 1 ? 'Stern' : 'Sterne'} von ${review.reviewerName || review.reviewer || 'Unbekannt'}</div>
+                                    <div style="font-weight: 600; color: #dc3545; margin-bottom: 8px;">⭐ ${review.rating} ${review.rating === 1 ? 'Star' : 'Stars'} by ${review.reviewerName || review.reviewer || 'Unknown'}</div>
                                     <div style="color: #666; font-style: italic; background: white; padding: 10px; border-radius: 4px; border-left: 3px solid #dc3545;">
-                                        "${review.reviewText || review.text ? (review.reviewText || review.text).substring(0, 150) + ((review.reviewText || review.text).length > 150 ? '...' : '') : 'Kein Text'}"
+                                        "${review.reviewText || review.text ? (review.reviewText || review.text).substring(0, 150) + ((review.reviewText || review.text).length > 150 ? '...' : '') : 'No text'}"
                                     </div>
                                 </div>
                             `).join('')}
                             
                             <div style="background: #dc3545; color: white; padding: 20px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 18px; margin: 25px 0;">
-                                🚀 <strong>SOFORT HANDELN:</strong> Kunde erwartet Ergebnisse binnen 24h!
+                                🚀 <strong>ACT NOW:</strong> Customer expects results within 24 hours!
                             </div>
                         </div>
                     </div>
@@ -469,13 +472,27 @@ app.post('/api/submit-order', async (req, res) => {
                 });
                 console.log('✅ Customer confirmation email sent to:', customerEmail);
 
-                // Send admin notification email
-                if (process.env.NOTIFICATION_EMAIL) {
+                // Send admin notification email to multiple recipients
+                if (process.env.NOTIFICATION_EMAIL || process.env.OPERATIONS_EMAIL) {
+                    // Build recipient list
+                    const adminRecipients = [];
+                    
+                    if (process.env.NOTIFICATION_EMAIL) {
+                        adminRecipients.push(process.env.NOTIFICATION_EMAIL);
+                    }
+                    
+                    if (process.env.OPERATIONS_EMAIL) {
+                        adminRecipients.push(process.env.OPERATIONS_EMAIL);
+                    }
+                    
+                    // Convert array to comma-separated string for email "to" field
+                    const recipientList = adminRecipients.join(', ');
+                    
                     await emailTransporter.sendMail({
                         from: '"Rufheld Backend" <info@rufheld.de>',
                         replyTo: 'info@rufheld.de',
-                        to: process.env.NOTIFICATION_EMAIL,
-                        subject: `🚨 NEUER AUFTRAG: ${customerName} - ${selectedReviews.length} Reviews (€${calculatedPrice.toFixed(2)})`,
+                        to: recipientList, // Sends to both emails in one email
+                        subject: `🚨 NEW ORDER: ${customerName} - ${selectedReviews.length} Reviews (€${calculatedPrice.toFixed(2)})`,
                         html: notificationEmailHtml,
                         headers: {
                             'X-Priority': '1',
@@ -483,7 +500,8 @@ app.post('/api/submit-order', async (req, res) => {
                             'Importance': 'high'
                         }
                     });
-                    console.log('✅ Admin notification email sent to:', process.env.NOTIFICATION_EMAIL);
+                    
+                    console.log('✅ Admin notification email sent to:', recipientList);
                 }
 
                 console.log('✅ All emails sent successfully');
