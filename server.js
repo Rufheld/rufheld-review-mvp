@@ -354,7 +354,7 @@ app.post('/api/submit-order', async (req, res) => {
                                     <li style="margin: 8px 0;"><strong>Auftrags-ID:</strong> <span style="background: #1DC3A3; color: white; padding: 2px 6px; border-radius: 4px; font-weight: 600;">${orderId}</span></li>
                                     <li style="margin: 8px 0;"><strong>Unternehmen:</strong> ${businessName}</li>
                                     <li style="margin: 8px 0;"><strong>Anzahl Bewertungen:</strong> ${selectedReviews.length}</li>
-                                    <li style="margin: 8px 0;"><strong>Gesamtpreis:</strong> €${calculatedPrice.toFixed(2)} (nur bei Erfolg)</li>
+                                    <li style="margin: 8px 0;"><strong>Abrechnung:</strong> €${calculatedPrice.toFixed(2)} (Rechnung nach erfolgreichem Entfernen)</li>
                                 </ul>
                             </div>
                             
@@ -385,7 +385,7 @@ app.post('/api/submit-order', async (req, res) => {
                                     <li style="margin: 10px 0; font-weight: 500;">Unser Expertenteam beginnt sofort mit der Analyse und Entfernung</li>
                                     <li style="margin: 10px 0; font-weight: 500;">Erste Ergebnisse binnen 1 Stunde</li>
                                     <li style="margin: 10px 0; font-weight: 500;">Vollständige Bearbeitung binnen 24 Stunden</li>
-                                    <li style="margin: 10px 0; font-weight: 500;">Sie zahlen nur bei erfolgreichem Ergebnis</li>
+                                    <li style="margin: 10px 0; font-weight: 500;"><strong>Wir melden uns per E-Mail mit Ihrer Siegesmeldung und senden die Rechnung</strong> - nur bei tatsächlichem Erfolg</li>
                                 </ol>
                             </div>
                             
