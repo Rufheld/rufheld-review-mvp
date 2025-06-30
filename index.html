@@ -1318,6 +1318,64 @@
                 max-height: 300px;
                 border-radius: 12px;
             }
+
+            /* Footer Styles */
+            .main-footer {
+                background: #2c3e50;
+                color: white;
+                padding: 40px 0 20px 0;
+                margin-top: 50px;
+            }
+            
+            .footer-content {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 20px;
+                text-align: center;
+            }
+            
+            .footer-logo {
+                margin-bottom: 20px;
+            }
+            
+            .footer-logo img {
+                height: 50px;
+                width: auto;
+                filter: brightness(0) invert(1);
+            }
+            
+            .footer-links {
+                display: flex;
+                justify-content: center;
+                gap: 30px;
+                margin-bottom: 20px;
+                flex-wrap: wrap;
+            }
+            
+            .footer-links a {
+                color: #bdc3c7;
+                text-decoration: none;
+                font-size: 0.9rem;
+                transition: color 0.3s ease;
+            }
+            
+            .footer-links a:hover {
+                color: #1DC3A3;
+            }
+            
+            .footer-copyright {
+                border-top: 1px solid #34495e;
+                padding-top: 20px;
+                font-size: 0.8rem;
+                color: #95a5a6;
+            }
+            
+            @media (max-width: 768px) {
+                .footer-links {
+                    flex-direction: column;
+                    gap: 15px;
+                }
+            }
         }
     </style>
 </head>
@@ -1749,7 +1807,22 @@
             </style>
         </div>
     </div>
-
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" alt="Rufheld">
+            </div>
+            <div class="footer-links">
+                <a href="https://www.rufheld.de/impressum" target="_blank">Impressum</a>
+                <a href="https://www.rufheld.de/agb" target="_blank">AGB</a>
+                <a href="https://www.rufheld.de/datenschutzerklarung" target="_blank">Datenschutzerklärung</a>
+            </div>
+            <div class="footer-copyright">
+                © 2025 Rufheld. Alle Rechte vorbehalten.
+            </div>
+        </div>
+    </footer>
     <script>
         // Configuration
         const API_BASE_URL = 'https://rufheld-review-mvp-production.up.railway.app';
