@@ -38,27 +38,29 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+        :root{
+       --c-blue-dark:  #00277C;
+       --c-blue-mid:   #2F5AA6;
+       --c-turquoise:  #1AAA8E;
+       --c-mint:       #1DC3A3;
+    }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-
-            /* 1) Basisfarbe, die NACH dem Verlauf benutzt wird                */
-            background:#1DC3A3;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
         
-            /* 2) Diagonaler Verlauf – Farbstopps näher zusammengezogen         */
-            background-image:linear-gradient(
+            /* 1) der eigentliche Verlauf  ─────────────────────────── */
+            background-image: linear-gradient(
                 135deg,
-                #00277C   0%,   /* tiefes Blau                                     */
-                #2F5AA6  15%,   /* helleres Blau kommt viel früher                 */
-                #1AAA8E  55%,   /* Türkis                                           */
-                #1DC3A3 100%    /* Mint                                            */
+                var(--c-blue-dark) 0,          /* Start sofort blau          */
+                var(--c-blue-mid)  15vmax,     /* nach 15 vmax → helleres Blau  */
+                var(--c-turquoise) 45vmax,     /* nach 45 vmax → Türkis         */
+                var(--c-mint)      90vmax      /* ab 90 vmax → Mint (läuft aus) */
             );
         
-            /* 3) Verlauf nur genau 1 Viewport-Höhe hoch                         */
-            background-repeat:no-repeat;
-            background-position:center top;
-            background-size:100% 100vh;    /* Desktop & ältere Browser            */
-            min-height:100vh;
+            /* 2) wichtige Zusatz-Props  ───────────────────────────── */
+            background-attachment: fixed;      /* Gradient bleibt am Viewport kleben   */
+            background-repeat: no-repeat;      /* kein Streifen-Repeat                 */
+            background-size: 100% 100%;        /* füllt immer gesamte Diagonale        */
             color:#333;
             line-height:1.6;
         }
