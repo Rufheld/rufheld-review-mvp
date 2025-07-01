@@ -2700,50 +2700,78 @@
             }
         }
         
-        // NEUE FUNKTION: WhatsApp Consultation anzeigen
+        // VEREINFACHTE WhatsApp Consultation - Alles in einem Bereich
         function showWhatsAppConsultation(selectedCount, shouldScroll = false) {
-            // Update UI für WhatsApp Consultation
-            document.getElementById('selected-count').textContent = 
-                `${selectedCount} Bewertungen ausgewählt`;
-            document.getElementById('total-price').textContent = 
-                `Individueller Preis`;
-            
             // Hide standard pricing elements
             document.getElementById('price-breakdown').style.display = 'none';
             document.getElementById('savings-display').style.display = 'none';
             document.getElementById('tier-incentive').style.display = 'none';
             
-            // Show special WhatsApp message
+            // Update Summary Section mit allem zusammen
+            const summaryContent = document.querySelector('.summary-content');
+            if (summaryContent) {
+                summaryContent.innerHTML = `
+                    <div class="summary-text">
+                        <!-- Bewertungen Info -->
+                        <div class="selected-count" style="font-size: 1.3rem; font-weight: 600; margin-bottom: 5px;">
+                            ${selectedCount} Bewertungen ausgewählt
+                        </div>
+                        <div class="total-price" style="font-size: 1.6rem; font-weight: 700; margin-bottom: 15px;">
+                            Individueller Preis
+                        </div>
+                        
+                        <!-- Erklärung -->
+                        <div style="color: rgba(255,255,255,0.95); font-size: 15px; margin-bottom: 20px; line-height: 1.4;">
+                            <strong>Ab 11 Reviews erstellen wir individuelle Angebote.</strong><br>
+                            Das ist schneller und oft günstiger für dich.
+                        </div>
+                        
+                        <!-- Benefits -->
+                        <div style="background: rgba(255,255,255,0.1); border-radius: 10px; padding: 18px; margin: 20px 0; border: 1px solid rgba(255,255,255,0.2);">
+                            <ul style="color: white; font-size: 14px; text-align: left; margin: 0; padding: 0; list-style: none;">
+                                <li style="margin: 8px 0; padding-left: 22px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #1DC3A3; font-weight: bold; font-size: 14px;">✓</span>
+                                    Antwort innerhalb von 5 Minuten
+                                </li>
+                                <li style="margin: 8px 0; padding-left: 22px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #1DC3A3; font-weight: bold; font-size: 14px;">✓</span>
+                                    Mengenrabatt bei größeren Projekten
+                                </li>
+                                <li style="margin: 8px 0; padding-left: 22px; position: relative;">
+                                    <span style="position: absolute; left: 0; color: #1DC3A3; font-weight: bold; font-size: 14px;">✓</span>
+                                    Persönliche Beratung statt Automatik
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="price-note" style="font-size: 13px; opacity: 0.9; margin-top: 15px;">
+                            Zahlung nur bei erfolgreichem Ergebnis
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Show summary
             const summary = document.getElementById('selection-summary');
             summary.style.display = 'block';
             
-            // Replace contact form with WhatsApp consultation
+            // Nur noch WhatsApp Button in Contact Section
             const contactSection = document.getElementById('contact-form-section');
             contactSection.innerHTML = `
-                <h3>🚀 Individuelle Beratung für ${selectedCount} Reviews</h3>
-                <p class="contact-subtitle">
-                    Für größere Projekte erstellen wir ein individuelles Angebot - 
-                    kontaktieren Sie uns über WhatsApp für eine persönliche Beratung!
-                </p>
-                
-                <div style="text-align: center; margin: 30px 0;">
-                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-                        <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 10px;">⚡ Antwort innerhalb von 5 Minuten</div>
-                        <div style="font-size: 1.1rem; opacity: 0.9;">Individueller Preis je nach Komplexität</div>
-                    </div>
-                    
-                    <a href="https://wa.me/4915129658221?text=Hallo%20Rufheld%20Team%21%20Ich%20möchte%20${selectedCount}%20negative%20Bewertungen%20für%20mein%20Unternehmen%20${encodeURIComponent(selectedBusiness?.description || 'mein Unternehmen')}%20entfernen%20lassen.%20Können%20Sie%20mir%20ein%20individuelles%20Angebot%20machen%3F" 
+                <div style="text-align: center; padding: 25px 0;">
+                    <a href="https://wa.me/4915129658221?text=Hallo%20Rufheld%20Team%21%0A%0AIch%20habe%20${selectedCount}%20negative%20Bewertungen%20für%20mein%20Unternehmen%20${encodeURIComponent(selectedBusiness?.description || 'mein Unternehmen')}%20ausgewählt.%0A%0AKönnt%20ihr%20mir%20ein%20individuelles%20Angebot%20machen%3F" 
                        target="_blank" 
-                       class="order-btn" 
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; max-width: 400px; width: 100%;">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24" height="24">
-                        Jetzt WhatsApp Beratung starten
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; text-decoration: none; width: 100%; max-width: 400px; font-size: 18px; font-weight: 600; padding: 18px 30px; background: #25D366; border: none; border-radius: 12px; color: white; box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3); transition: all 0.3s ease;"
+                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 18px rgba(37, 211, 102, 0.4)';"
+                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(37, 211, 102, 0.3)';">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24" height="24" style="filter: brightness(0) invert(1);">
+                        <span>Jetzt WhatsApp Beratung starten</span>
                     </a>
                 </div>
                 
-                <div class="privacy-notice">
-                    💬 Direkter Kontakt über WhatsApp - schnelle und persönliche Beratung für Ihr Projekt
-                </div>
+                <p style="color: rgba(255,255,255,0.9); font-size: 14px; text-align: center; margin: 0;">
+                    📱 Direkter Kontakt für schnelle Abwicklung
+                </p>
             `;
             
             contactSection.style.display = 'block';
