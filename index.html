@@ -41,7 +41,7 @@
     
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8f9fa; /* Neutraler Hintergrund */
+            background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
@@ -58,22 +58,18 @@
             color: white;
             padding: 40px 20px;
             margin-bottom: 30px;
-            /* NEU: Kompakter Gradient nur für Header */
-            background: linear-gradient(135deg, #00277C 0%, #1AAA8E 40%, #1DC3A3 70%, #26E6CC 100%);
-            /* Sanfter Übergang nach unten */
-            box-shadow: 0 10px 30px rgba(0,39,124,0.2);
         }
+        /* MOBILE: Separater Header-Gradient */
         @media (max-width: 768px) {
+            body {
+                background: #f8f9fa; /* Neutraler Hintergrund nur auf Mobile */
+            }
+            
             .header {
-                padding: 30px 15px; /* Weniger Padding = kompakter */
-            }
-            
-            .logo-image {
-                height: 60px; /* Kleineres Logo */
-            }
-            
-            .hero-title {
-                font-size: 1.8rem; /* Kleinere Überschrift */
+                background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%);
+                border-radius: 0 0 20px 20px; /* Abgerundete Ecken unten */
+                box-shadow: 0 10px 30px rgba(0,39,124,0.2);
+                margin-bottom: 0; /* Direkter Übergang */
             }
         }
         .logo {
