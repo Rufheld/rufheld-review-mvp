@@ -35,9 +35,14 @@
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
+            padding: 20px;
+        }
+
+        .page-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
             padding: 20px;
         }
         
@@ -766,8 +771,6 @@
 
         <!-- Footer Section -->
         <div class="footer-section">
-          </div>
-
             <div class="social-proof">
                 <div class="proof-item">
                     <div class="proof-icon">⭐</div>
@@ -783,23 +786,24 @@
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" alt="Rufheld">
+        </div> <!-- ← Schließt .thank-you-container -->
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="https://cdn.prod.website-files.com/66e9bed574500384950cc91e/66eac4728631acb94039d9af_55918_RufHeld_RB-03-FINAL.webp" alt="Rufheld">
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.rufheld.de/impressum" target="_blank">Impressum</a>
+                    <a href="https://www.rufheld.de/agb" target="_blank">AGB</a>
+                    <a href="https://www.rufheld.de/datenschutzerklarung" target="_blank">Datenschutzerklärung</a>
+                </div>
+                <div class="footer-copyright">
+                    © 2025 Rufheld. Alle Rechte vorbehalten.
+                </div>
             </div>
-            <div class="footer-links">
-                <a href="https://www.rufheld.de/impressum" target="_blank">Impressum</a>
-                <a href="https://www.rufheld.de/agb" target="_blank">AGB</a>
-                <a href="https://www.rufheld.de/datenschutzerklarung" target="_blank">Datenschutzerklärung</a>
-            </div>
-            <div class="footer-copyright">
-                © 2025 Rufheld. Alle Rechte vorbehalten.
-            </div>
-        </div>
-    </footer>
+        </footer>
 
     <script>
         // Get order data from URL parameters or localStorage
