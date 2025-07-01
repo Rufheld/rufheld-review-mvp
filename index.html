@@ -54,6 +54,13 @@
             padding: 20px;
         }
         
+        /* Mobile: Kein Padding für vollflächige Darstellung */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0; /* Entfernt den grauen Rand auf Mobile */
+            }
+        }
+        
         .header {
             text-align: center;
             color: white;
