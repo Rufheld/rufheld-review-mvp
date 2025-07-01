@@ -1595,30 +1595,29 @@
                         <h3 class="pricing-title">💰 Je mehr Reviews, desto günstiger wird es!</h3>
                         <div class="pricing-grid">
                             <div class="pricing-tier">
-                                <div class="tier-range">1-10 Reviews</div>
+                                <div class="tier-range">1-3 Reviews</div>
+                                <div class="tier-price">€49,99</div>
+                                <div class="tier-label">Premium</div>
+                            </div>
+                            <div class="pricing-tier highlight">
+                                <div class="tier-range">4-7 Reviews</div>
                                 <div class="tier-price">€39,99</div>
-                                <div class="tier-label">Standard</div>
+                                <div class="tier-label">20% günstiger!</div>
                             </div>
                             <div class="pricing-tier highlight">
-                                <div class="tier-range">11-25 Reviews</div>
-                                <div class="tier-price">€19,99</div>
-                                <div class="tier-label">50% günstiger!</div>
+                                <div class="tier-range">8-10 Reviews</div>
+                                <div class="tier-price">€29,99</div>
+                                <div class="tier-label">40% günstiger!</div>
                             </div>
-                            <div class="pricing-tier highlight">
-                                <div class="tier-range">26-50 Reviews</div>
-                                <div class="tier-price">€12,99</div>
-                                <div class="tier-label">68% günstiger!</div>
-                            </div>
-                            <div class="pricing-tier highlight">
-                                <div class="tier-range">51+ Reviews</div>
-                                <div class="tier-price">€9,99</div>
-                                <div class="tier-label">75% günstiger!</div>
+                            <div class="pricing-tier" style="background: linear-gradient(135deg, #00277C 0%, #1DC3A3 100%); color: white;">
+                                <div class="tier-range" style="color: white;">11+ Reviews</div>
+                                <div class="tier-price" style="color: white; font-size: 1.2rem;">Individual</div>
+                                <div class="tier-label" style="color: white;">WhatsApp Beratung</div>
                             </div>
                         </div>
                         
-                        <!-- Selection Reminder -->
                         <div class="selection-reminder">
-                            👇 Wähle deine Reviews unten aus
+                            👇 Wähle deine Reviews aus (bis 10 Reviews: Festpreis, ab 11 Reviews: individuelle Beratung)
                         </div>
                     </div>
                     
@@ -1920,16 +1919,26 @@
         // Configuration
         const API_BASE_URL = 'https://rufheld-review-mvp-production.up.railway.app';
         
-        // Dynamic Pricing Tiers
+        // Dynamic Pricing Tiers - NEUE VERSION
         const PRICING_TIERS = [
-            { min: 1, max: 10, price: 39.99, discount: 0, label: "Standard" },
-            { min: 11, max: 25, price: 19.99, discount: 50, label: "50% günstiger!" },
-            { min: 26, max: 50, price: 12.99, discount: 68, label: "68% günstiger!" },
-            { min: 51, max: Infinity, price: 9.99, discount: 75, label: "75% günstiger!" }
+            { min: 1, max: 3, price: 49.99, discount: 0, label: "Premium" },
+            { min: 4, max: 7, price: 39.99, discount: 20, label: "20% günstiger!" },
+            { min: 8, max: 10, price: 29.99, discount: 40, label: "40% günstiger!" }
         ];
         
-        // Calculate tiered pricing
+        // Calculate tiered pricing - NEUE VERSION (nur 1-10 Reviews)
         function calculateTieredPrice(reviewCount) {
+            // Für 11+ Reviews wird WhatsApp Consultation gezeigt
+            if (reviewCount >= 11) {
+                return {
+                    totalPrice: 0,
+                    breakdown: [],
+                    savings: 0,
+                    standardPrice: 0,
+                    requiresConsultation: true
+                };
+            }
+            
             let totalPrice = 0;
             let breakdown = [];
             let remainingReviews = reviewCount;
@@ -1954,7 +1963,7 @@
                 }
             }
             
-            // Calculate potential savings (vs all at standard price)
+            // Calculate potential savings (vs all at highest price)
             const standardPrice = reviewCount * PRICING_TIERS[0].price;
             const savings = standardPrice - totalPrice;
             
@@ -1962,8 +1971,47 @@
                 totalPrice,
                 breakdown,
                 savings,
-                standardPrice
+                standardPrice,
+                requiresConsultation: false
             };
+        }
+        
+        // Get next tier incentive - ANGEPASST für neues Pricing
+        function getNextTierIncentive(currentCount) {
+            // Kein Incentive für 11+ (WhatsApp Consultation)
+            if (currentCount >= 11) {
+                return null;
+            }
+            
+            for (const tier of PRICING_TIERS) {
+                if (currentCount < tier.min) {
+                    const reviewsNeeded = tier.min - currentCount;
+                    const newPrice = tier.price;
+                    const currentTier = PRICING_TIERS.find(t => currentCount >= t.min && currentCount <= t.max);
+                    const currentPrice = currentTier ? currentTier.price : PRICING_TIERS[0].price;
+                    
+                    return {
+                        reviewsNeeded,
+                        newPrice,
+                        currentPrice,
+                        discount: tier.discount,
+                        label: tier.label
+                    };
+                }
+            }
+            
+            // Wenn bereits in höchstem Tier (8-10), zeige WhatsApp Incentive
+            if (currentCount >= 8 && currentCount <= 10) {
+                return {
+                    reviewsNeeded: 11 - currentCount,
+                    newPrice: 0,
+                    currentPrice: PRICING_TIERS[2].price, // 29.99
+                    discount: 100,
+                    label: "Individuelle WhatsApp Beratung"
+                };
+            }
+            
+            return null;
         }
         //Smooth Scroll CTA Button
         function scrollToForm() {
@@ -2569,11 +2617,17 @@
             updateSelection();
         }
 
-        // ZENTRALE FUNKTION - Updated alles mit Dynamic Pricing
+        // ZENTRALE FUNKTION - Updated mit neuem Pricing + WhatsApp Logic
         function updateSelection(shouldScroll = false) {
             const selectedCount = selectedReviews.size;
             
-            // Calculate tiered pricing
+            // Check if WhatsApp consultation needed (11+ reviews)
+            if (selectedCount >= 11) {
+                showWhatsAppConsultation(selectedCount, shouldScroll);
+                return;
+            }
+            
+            // Calculate tiered pricing (only for 1-10 reviews)
             const pricingData = calculateTieredPrice(selectedCount);
             
             // Update UI
@@ -2581,7 +2635,7 @@
                 `${selectedCount} Bewertung${selectedCount !== 1 ? 'en' : ''} ausgewählt`;
             document.getElementById('total-price').textContent = 
                 `€${pricingData.totalPrice.toFixed(2).replace('.', ',')}`;
-
+        
             // Update price breakdown
             const breakdownElement = document.getElementById('price-breakdown');
             if (selectedCount > 0 && pricingData.breakdown.length > 0) {
@@ -2593,7 +2647,7 @@
             } else {
                 breakdownElement.style.display = 'none';
             }
-
+        
             // Update savings display
             const savingsElement = document.getElementById('savings-display');
             if (pricingData.savings > 0) {
@@ -2603,7 +2657,7 @@
             } else {
                 savingsElement.style.display = 'none';
             }
-
+        
             // Update tier incentive
             const incentiveElement = document.getElementById('tier-incentive');
             const nextTier = getNextTierIncentive(selectedCount);
@@ -2618,7 +2672,7 @@
             } else {
                 incentiveElement.style.display = 'none';
             }
-
+        
             // Show/hide summary section
             const summary = document.getElementById('selection-summary');
             if (selectedCount > 0) {
@@ -2634,11 +2688,74 @@
                     updateProgressiveSteps(2);
                 }
             }
-
-            // Kontaktformular Logic
+        
+            // Kontaktformular Logic (nur für 1-10 reviews)
             toggleContactForm(shouldScroll);
+            
             // NUR bei Bulk-Selection scrollen (shouldScroll Parameter)
             if (shouldScroll && selectedCount > 0) {
+                setTimeout(() => {
+                    scrollToSummary();
+                }, 300);
+            }
+        }
+        
+        // NEUE FUNKTION: WhatsApp Consultation anzeigen
+        function showWhatsAppConsultation(selectedCount, shouldScroll = false) {
+            // Update UI für WhatsApp Consultation
+            document.getElementById('selected-count').textContent = 
+                `${selectedCount} Bewertungen ausgewählt`;
+            document.getElementById('total-price').textContent = 
+                `Individueller Preis`;
+            
+            // Hide standard pricing elements
+            document.getElementById('price-breakdown').style.display = 'none';
+            document.getElementById('savings-display').style.display = 'none';
+            document.getElementById('tier-incentive').style.display = 'none';
+            
+            // Show special WhatsApp message
+            const summary = document.getElementById('selection-summary');
+            summary.style.display = 'block';
+            
+            // Replace contact form with WhatsApp consultation
+            const contactSection = document.getElementById('contact-form-section');
+            contactSection.innerHTML = `
+                <h3>🚀 Individuelle Beratung für ${selectedCount} Reviews</h3>
+                <p class="contact-subtitle">
+                    Für größere Projekte erstellen wir ein individuelles Angebot - 
+                    kontaktieren Sie uns über WhatsApp für eine persönliche Beratung!
+                </p>
+                
+                <div style="text-align: center; margin: 30px 0;">
+                    <div style="background: rgba(255,255,255,0.15); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <div style="font-size: 1.3rem; font-weight: 600; margin-bottom: 10px;">⚡ Antwort innerhalb von 5 Minuten</div>
+                        <div style="font-size: 1.1rem; opacity: 0.9;">Individueller Preis je nach Komplexität</div>
+                    </div>
+                    
+                    <a href="https://wa.me/4915129658221?text=Hallo%20Rufheld%20Team%21%20Ich%20möchte%20${selectedCount}%20negative%20Bewertungen%20für%20mein%20Unternehmen%20${encodeURIComponent(selectedBusiness?.description || 'mein Unternehmen')}%20entfernen%20lassen.%20Können%20Sie%20mir%20ein%20individuelles%20Angebot%20machen%3F" 
+                       target="_blank" 
+                       class="order-btn" 
+                       style="display: inline-flex; align-items: center; justify-content: center; gap: 10px; text-decoration: none; max-width: 400px; width: 100%;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="24" height="24">
+                        Jetzt WhatsApp Beratung starten
+                    </a>
+                </div>
+                
+                <div class="privacy-notice">
+                    💬 Direkter Kontakt über WhatsApp - schnelle und persönliche Beratung für Ihr Projekt
+                </div>
+            `;
+            
+            contactSection.style.display = 'block';
+            contactSection.classList.add('show');
+            
+            // Update to Step 3
+            if (currentProgressStep === 2) {
+                updateProgressiveSteps(3);
+            }
+            
+            // Scroll if needed
+            if (shouldScroll) {
                 setTimeout(() => {
                     scrollToSummary();
                 }, 300);
