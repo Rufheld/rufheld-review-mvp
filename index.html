@@ -1896,21 +1896,19 @@
                         font-weight: 400 !important;
                     }
                 }
-                /* CSS Fixes für WhatsApp Consultation - Lücken entfernen */
+                
+                
+                /* Minimale CSS Fixes - Behalte normales Spacing für 1-10 Reviews */
 
-                /* Entferne Lücken zwischen Summary und Contact Section */
-                .selection-summary {
-                    margin-bottom: 0 !important;
-                }
-                
-                .contact-form-section.show {
-                    margin-top: 0 !important;
-                    margin-bottom: 0 !important;
-                }
-                
-                /* Entferne große Lücke nach Contact Section */
-                .main-content {
-                    margin-bottom: 20px !important; /* Statt 30px */
+                /* Für Mobile Responsiveness */
+                @media (max-width: 768px) {
+                    .contact-form-section {
+                        padding: 24px 20px !important;
+                    }
+                    
+                    .main-content {
+                        margin-bottom: 15px !important;
+                    }
                 }
                 
                 /* Stelle sicher, dass der WhatsApp Button richtig aussieht */
