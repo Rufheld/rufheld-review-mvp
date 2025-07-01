@@ -2636,7 +2636,7 @@
             }
 
             // Kontaktformular Logic
-            toggleContactForm();
+            toggleContactForm(shouldScroll);
             // NUR bei Bulk-Selection scrollen (shouldScroll Parameter)
             if (shouldScroll && selectedCount > 0) {
                 setTimeout(() => {
@@ -2651,7 +2651,7 @@
         }
 
         // ===== KONTAKTFORMULAR LOGIC =====
-        function toggleContactForm() {
+        function toggleContactForm(shouldScroll = false) {
             const contactSection = document.getElementById('contact-form-section');
             const selectedCount = selectedReviews.size;
             const businessSelected = selectedBusiness !== null;
@@ -2663,12 +2663,14 @@
                 }, 50);
                 contactFormVisible = true;
                 
-                // Scroll to the warenkorb (selection-summary) instead of contact form
-                const summarySection = document.getElementById('selection-summary');
-                summarySection.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
+                // NUR scrollen wenn shouldScroll = true
+                if (shouldScroll) {
+                    const summarySection = document.getElementById('selection-summary');
+                    summarySection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
                 
                 updatePricingVisibility();
             } else if (selectedCount === 0) {
