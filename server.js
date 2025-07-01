@@ -267,14 +267,18 @@ app.post('/api/submit-order', async (req, res) => {
             });
         }
 
-        // Dynamic Pricing Function - Gleiche Logic wie Frontend
+        // Dynamic Pricing Function - NEUE VERSION (Backend)
         function calculateTieredPrice(reviewCount) {
             const PRICING_TIERS = [
-                { min: 1, max: 10, price: 39.99 },
-                { min: 11, max: 25, price: 19.99 },
-                { min: 26, max: 50, price: 12.99 },
-                { min: 51, max: Infinity, price: 9.99 }
+                { min: 1, max: 3, price: 49.99 },
+                { min: 4, max: 7, price: 39.99 },
+                { min: 8, max: 10, price: 29.99 }
             ];
+            
+            // Für 11+ Reviews: Individuelle Beratung (kein fester Preis)
+            if (reviewCount >= 11) {
+                return 0; // Wird über WhatsApp individuell besprochen
+            }
             
             let totalPrice = 0;
             let remainingReviews = reviewCount;
