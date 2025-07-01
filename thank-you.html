@@ -35,8 +35,8 @@
             min-height: 100vh;
             color: #333;
             line-height: 1.6;
-            padding: 0; /* Kein Padding */
-            margin: 0; /* Kein Margin */
+            padding: 0;
+            margin: 0;
         }
         
         .page-wrapper {
@@ -44,20 +44,37 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 0; /* Kein Padding - komplett randlos */
+            padding: 0;
+            width: 100vw; /* Volle Viewport-Breite */
         }
         
         .thank-you-container {
-            max-width: 900px;
-            width: 100%;
+            width: 100%; /* Volle Breite auf Mobile */
+            max-width: 900px; /* Max-Breite auf Desktop */
             background: white;
-            border-radius: 0; /* Keine abgerundeten Ecken auf Mobile */
+            border-radius: 0;
             box-shadow: 
                 0 25px 50px rgba(0,0,0,0.15),
                 0 10px 25px rgba(0,0,0,0.1);
             overflow: hidden;
             position: relative;
             animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 0 auto; /* Zentriert den Container */
+        }
+        
+        /* Mobile: Komplett randlos */
+        @media (max-width: 768px) {
+            .thank-you-container {
+                margin: 0;
+                border-radius: 0;
+                width: 100vw; /* Exakt Viewport-Breite */
+                max-width: none; /* Entferne max-width auf Mobile */
+            }
+            
+            .page-wrapper {
+                padding: 0;
+                justify-content: flex-start; /* Links ausrichten auf Mobile */
+            }
         }
 
         @keyframes slideInUp {
