@@ -198,6 +198,25 @@
             margin: 0;
         }
 
+        .hero-cta-btn {
+            background: white;
+            color: #00277C;
+            padding: 18px 36px;
+            border: 2px solid #1DC3A3;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .hero-cta-btn:hover {
+            background: #1DC3A3;
+            color: white;
+            transform: translateY(-2px);
+        }
+
         /* How it Works Section */
         .how-it-works-section {
             background: white;
@@ -1425,6 +1444,7 @@
                 max-height: 300px;
                 border-radius: 12px;
             }
+            
         }
     </style>
 </head>
@@ -1459,6 +1479,13 @@
                 <div class="pain-agitation">
                     <p>❌ <strong>Jeden Tag verlierst du potentielle Kunden wegen negativer Bewertungen!</strong></p>
                     <p>Während du hier liest, schauen sich neue Kunden deine schlechten Bewertungen an und gehen zur Konkurrenz.</p>
+                </div>
+
+                <!-- NEU: CTA Button hier einfügen -->
+                <div class="hero-cta">
+                    <button class="hero-cta-btn" onclick="scrollToForm()">
+                        🚀 Meine Bewertungen jetzt bereinigen lassen
+                    </button>
                 </div>
             </div>
         </header>
@@ -1936,7 +1963,14 @@
                 standardPrice
             };
         }
-
+        //Smooth Scroll CTA Button
+        function scrollToForm() {
+            document.getElementById('search-section').scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+        
         // Get next tier incentive
         function getNextTierIncentive(currentCount) {
             for (const tier of PRICING_TIERS) {
