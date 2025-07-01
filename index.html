@@ -2343,6 +2343,7 @@
                 card.classList.remove('selected');
             }
 
+            // WICHTIG: Kein shouldScroll Parameter = kein Auto-Scroll
             updateSelection();
         }
 
@@ -2383,12 +2384,8 @@
                     }
                 });
 
-                updateSelection();
-                
-                // Always scroll to summary after bulk selection
-                setTimeout(() => {
-                    scrollToSummary();
-                }, 300);
+                // WICHTIG: shouldScroll = true für Bulk-Selection
+                updateSelection(true);
                 
                 // Track bulk selection with tiered pricing
                 const pricingData = calculateTieredPrice(selectedReviews.size);
@@ -2447,12 +2444,8 @@
                     }
                 });
 
-                updateSelection();
-                
-                // Always scroll to summary after bulk selection
-                setTimeout(() => {
-                    scrollToSummary();
-                }, 300);
+                // WICHTIG: shouldScroll = true für Bulk-Selection
+                updateSelection(true);
                 
                 // Track bulk selection with tiered pricing
                 const pricingData = calculateTieredPrice(selectedReviews.size);
@@ -2572,11 +2565,12 @@
                 }
             });
             
+            // WICHTIG: Kein shouldScroll Parameter = kein Auto-Scroll
             updateSelection();
         }
 
         // ZENTRALE FUNKTION - Updated alles mit Dynamic Pricing
-        function updateSelection() {
+        function updateSelection(shouldScroll = false) {
             const selectedCount = selectedReviews.size;
             
             // Calculate tiered pricing
@@ -2643,6 +2637,12 @@
 
             // Kontaktformular Logic
             toggleContactForm();
+            // NUR bei Bulk-Selection scrollen (shouldScroll Parameter)
+            if (shouldScroll && selectedCount > 0) {
+                setTimeout(() => {
+                    scrollToSummary();
+                }, 300);
+            }
         }
 
         function loadMoreReviews() {
