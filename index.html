@@ -2449,18 +2449,12 @@
             const button = event.target;
             const originalText = button.textContent;
             
-            // Set button to loading state
             button.disabled = true;
             button.textContent = 'Lädt alle Reviews...';
             
             try {
-                // Clear previous selection first
-                clearSelection();
-                
-                // Load all reviews for the specified rating
-                await loadAllReviewsForRatings([rating]);
-                
-                // Ensure ALL cards are unchecked first, then select only the desired ones
+                // ✅ MANUELL löschen ohne updateSelection() aufzurufen
+                selectedReviews.clear();
                 document.querySelectorAll('.review-card').forEach(card => {
                     card.classList.remove('selected');
                     const checkbox = card.querySelector('.review-checkbox');
@@ -2468,6 +2462,9 @@
                         checkbox.checked = false;
                     }
                 });
+                
+                // Load all reviews for the specified rating
+                await loadAllReviewsForRatings([rating]);
                 
                 // Now select all reviews with the specified rating
                 allReviews.forEach(review => {
@@ -2481,24 +2478,14 @@
                         }
                     }
                 });
-
-                // WICHTIG: shouldScroll = true für Bulk-Selection
+        
+                // ✅ NUR EINMAL updateSelection() aufrufen
                 updateSelection(true);
-                
-                // Track bulk selection with tiered pricing
-                const pricingData = calculateTieredPrice(selectedReviews.size);
-                trackEvent('AddToCart', {
-                    content_type: 'reviews',
-                    value: pricingData.totalPrice,
-                    currency: 'EUR',
-                    num_items: selectedReviews.size
-                });
                 
             } catch (error) {
                 console.error('Error loading reviews for rating:', error);
                 alert('Fehler beim Laden aller Bewertungen. Bitte versuche es erneut.');
             } finally {
-                // Reset button
                 button.disabled = false;
                 button.textContent = originalText;
             }
@@ -2509,18 +2496,12 @@
             const button = event.target;
             const originalText = button.textContent;
             
-            // Set button to loading state
             button.disabled = true;
             button.textContent = 'Lädt alle Reviews...';
             
             try {
-                // Clear previous selection first
-                clearSelection();
-                
-                // Load all reviews for the specified ratings
-                await loadAllReviewsForRatings(ratings);
-                
-                // Ensure ALL cards are unchecked first, then select only the desired ones
+                // ✅ MANUELL löschen ohne updateSelection() aufzurufen
+                selectedReviews.clear();
                 document.querySelectorAll('.review-card').forEach(card => {
                     card.classList.remove('selected');
                     const checkbox = card.querySelector('.review-checkbox');
@@ -2529,7 +2510,8 @@
                     }
                 });
                 
-                // Now select all reviews with the specified ratings
+                await loadAllReviewsForRatings(ratings);
+                
                 allReviews.forEach(review => {
                     const reviewRating = parseInt(review.rating);
                     if (ratings.includes(reviewRating) && reviewRating <= 3) {
@@ -2541,24 +2523,14 @@
                         }
                     }
                 });
-
-                // WICHTIG: shouldScroll = true für Bulk-Selection
+        
+                // ✅ NUR EINMAL updateSelection() aufrufen
                 updateSelection(true);
-                
-                // Track bulk selection with tiered pricing
-                const pricingData = calculateTieredPrice(selectedReviews.size);
-                trackEvent('AddToCart', {
-                    content_type: 'reviews',
-                    value: pricingData.totalPrice,
-                    currency: 'EUR',
-                    num_items: selectedReviews.size
-                });
                 
             } catch (error) {
                 console.error('Error loading reviews for rating range:', error);
                 alert('Fehler beim Laden aller Bewertungen. Bitte versuche es erneut.');
             } finally {
-                // Reset button
                 button.disabled = false;
                 button.textContent = originalText;
             }
@@ -2662,8 +2634,6 @@
                     checkbox.checked = false;
                 }
             });
-
-            contactFormVisible = false;
             
             // WICHTIG: Kein shouldScroll Parameter = kein Auto-Scroll
             updateSelection();
